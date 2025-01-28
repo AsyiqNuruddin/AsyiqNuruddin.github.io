@@ -425,7 +425,7 @@
     <title>Sliver-C2 Basic</title>
     <url>/2024/11/22/sliver-c2-basic/</url>
     <content><![CDATA[<p>Sliver is an Open-Source Command and Control (C2) framework often used in penetration testing and red team operations. It offers robust features to deploy, manage, and interact with listener agents and payloads.</p>
-<p><img src="/images/sliverc2.png">{: width&#x3D;”500” height&#x3D;”300”}</p>
+<p><img src="/images/sliverc2.png"></p>
 <h3 id="Installation-of-Sliver"><a href="#Installation-of-Sliver" class="headerlink" title="Installation of Sliver"></a>Installation of Sliver</h3><p>Requirement for Sliver C2 is linux OS</p>
 <p>Sliver Installation</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl https://sliver.sh/install | sudo bash</span><br></pre></td></tr></table></figure>
