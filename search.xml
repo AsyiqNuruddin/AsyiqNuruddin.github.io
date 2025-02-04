@@ -1,6 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Basic Static and Dynamic Analysis cheatsheet</title>
+    <url>/2024/11/22/basic-static-and-dynamic-analysis/</url>
+    <content><![CDATA[<p>This cheatsheet is not indepth and detailed. It will only cover the required minimum<br>Might make a more indepth version when required.</p>
+<h2 id="Basic-Static-Analysis"><a href="#Basic-Static-Analysis" class="headerlink" title="Basic Static Analysis"></a>Basic Static Analysis</h2><ol>
+<li><strong>Malware Fingerprint</strong><ul>
+<li><strong>AV Scanning</strong><ul>
+<li>Hashing</li>
+<li>VirusTotal</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Finding String in Malware</strong><ul>
+<li><strong>Representation of Strings</strong><ul>
+<li>ASCII (1 Byte), Hexadecimal</li>
+<li>Unicode (2 Bytes)</li>
+</ul>
+</li>
+<li><strong>BinText</strong>: String Extraction Tool</li>
+</ul>
+</li>
+<li><strong>Portable Executable Format</strong></li>
+<li><strong>Source to Execution</strong><ul>
+<li><strong>Compiler</strong>: Translates high-level code to machine code</li>
+<li><strong>Linker</strong>: Links <code>.obj</code> files into a single <code>.exe</code> executable</li>
+<li><strong>Loader</strong>: Allocates memory space and prepares the execution file</li>
+</ul>
+</li>
+<li><strong>Linking</strong><ul>
+<li><strong>Static Linking</strong>: Library copied into executable at start</li>
+<li><strong>Dynamic Linking</strong>: Searches and loads library at runtime</li>
+</ul>
+</li>
+<li><strong>Loading a PE</strong><ul>
+<li><strong>Absolute Loading</strong>: Same address</li>
+<li><strong>Relocatable Loading</strong>: Different address based on availability</li>
+<li><strong>Dynamic Run-time Loading</strong>: Different address while running</li>
+</ul>
+</li>
+<li><strong>Address Binding</strong>: Binding of Virtual Address to Physical Address<ul>
+<li>Relative Virtual Addresses</li>
+<li>Base Address</li>
+</ul>
+</li>
+<li><strong>PE File Format</strong><ul>
+<li><strong>PE Sections</strong><ul>
+<li><code>.edata</code> (Export Data)</li>
+<li><code>.reloc</code> (Base Relocation)</li>
+</ul>
+</li>
+<li><strong>Dependency Walker</strong>: See <code>.edata</code> &amp; <code>.idata</code></li>
+<li><strong>PEView</strong>: View files when compiled</li>
+</ul>
+</li>
+<li><strong>Packing Executable</strong><ul>
+<li><strong>PEiD</strong>: Detect packed PE<ul>
+<li><strong>PEiD Unpacker</strong>: Use plugins to unpack</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Indicators of Malware</strong></li>
+</ol>
+<ul>
+<li><strong>Host-based Indicators</strong>: Affect the system (files, registry, process operations)</li>
+<li><strong>Network-based Indicators</strong>: Communicate with external IPs and URLs (Internet, socket operations)</li>
+</ul>
+<h2 id="Basic-Dynamic-Analysis"><a href="#Basic-Dynamic-Analysis" class="headerlink" title="Basic Dynamic Analysis"></a>Basic Dynamic Analysis</h2><ol>
+<li><strong>Running the Malware</strong><ul>
+<li><strong>Sandboxes</strong><ul>
+<li><strong>GFI Sandboxes</strong><ul>
+<li><strong>Mutex</strong>: Prevents multiple threads&#x2F;processes from accessing a resource</li>
+</ul>
+</li>
+<li><strong>Sandboxes Drawbacks</strong></li>
+</ul>
+</li>
+<li><strong>rundll32.exe</strong>: (Run DLL with export arguments)</li>
+</ul>
+</li>
+<li><strong>Process Monitoring</strong><ul>
+<li><strong>procmon</strong>: Historical monitoring</li>
+<li><strong>Process Explorer</strong>: Live monitoring</li>
+</ul>
+</li>
+<li><strong>Registry Monitoring</strong><ul>
+<li><strong>regshot</strong>: Compare registry before and after</li>
+<li><strong>CaptureBat</strong></li>
+</ul>
+</li>
+<li><strong>Network Monitoring</strong><ul>
+<li><strong>ApateDNS</strong>: Fake a network (127.0.0.1)<ul>
+<li>Change Local Host in TCP&#x2F;IP properties to <code>127.0.0.1</code></li>
+<li>Change DNS reply address in ApateDNS to <code>127.0.0.1</code></li>
+</ul>
+</li>
+<li><strong>NetCat</strong>: Command <code>nc -l -p 443</code> (-l is a lowercase L)</li>
+<li><strong>Wireshark</strong></li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Malware Analysis</category>
+      </categories>
+      <tags>
+        <tag>Malware Analysis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ethical Hacking Assignment | SME Network Penetration Testing</title>
     <url>/2025/01/28/Ethical-Hacking-Pentesting/</url>
     <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>During the COVID-19 pandemic, many organizations faced cybersecurity challenges as they quickly adapted to remote work environments. “<strong>Tech Skibidi Inc.</strong>“, a medium-sized IT support and software development company, encountered vulnerabilities due to rapid technology deployment and insufficient security measures. This project aims to assess and strengthen their security posture through penetration testing and real-world attack simulations.</p>
@@ -229,160 +339,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Basic Static and Dynamic Analysis cheatsheet</title>
-    <url>/2024/11/22/basic-static-and-dynamic-analysis/</url>
-    <content><![CDATA[<p>This cheatsheet is not indepth and detailed. It will only cover the required minimum<br>Might make a more indepth version when required.</p>
-<h2 id="Basic-Static-Analysis"><a href="#Basic-Static-Analysis" class="headerlink" title="Basic Static Analysis"></a>Basic Static Analysis</h2><ol>
-<li><strong>Malware Fingerprint</strong><ul>
-<li><strong>AV Scanning</strong><ul>
-<li>Hashing</li>
-<li>VirusTotal</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Finding String in Malware</strong><ul>
-<li><strong>Representation of Strings</strong><ul>
-<li>ASCII (1 Byte), Hexadecimal</li>
-<li>Unicode (2 Bytes)</li>
-</ul>
-</li>
-<li><strong>BinText</strong>: String Extraction Tool</li>
-</ul>
-</li>
-<li><strong>Portable Executable Format</strong></li>
-<li><strong>Source to Execution</strong><ul>
-<li><strong>Compiler</strong>: Translates high-level code to machine code</li>
-<li><strong>Linker</strong>: Links <code>.obj</code> files into a single <code>.exe</code> executable</li>
-<li><strong>Loader</strong>: Allocates memory space and prepares the execution file</li>
-</ul>
-</li>
-<li><strong>Linking</strong><ul>
-<li><strong>Static Linking</strong>: Library copied into executable at start</li>
-<li><strong>Dynamic Linking</strong>: Searches and loads library at runtime</li>
-</ul>
-</li>
-<li><strong>Loading a PE</strong><ul>
-<li><strong>Absolute Loading</strong>: Same address</li>
-<li><strong>Relocatable Loading</strong>: Different address based on availability</li>
-<li><strong>Dynamic Run-time Loading</strong>: Different address while running</li>
-</ul>
-</li>
-<li><strong>Address Binding</strong>: Binding of Virtual Address to Physical Address<ul>
-<li>Relative Virtual Addresses</li>
-<li>Base Address</li>
-</ul>
-</li>
-<li><strong>PE File Format</strong><ul>
-<li><strong>PE Sections</strong><ul>
-<li><code>.edata</code> (Export Data)</li>
-<li><code>.reloc</code> (Base Relocation)</li>
-</ul>
-</li>
-<li><strong>Dependency Walker</strong>: See <code>.edata</code> &amp; <code>.idata</code></li>
-<li><strong>PEView</strong>: View files when compiled</li>
-</ul>
-</li>
-<li><strong>Packing Executable</strong><ul>
-<li><strong>PEiD</strong>: Detect packed PE<ul>
-<li><strong>PEiD Unpacker</strong>: Use plugins to unpack</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Indicators of Malware</strong></li>
-</ol>
-<ul>
-<li><strong>Host-based Indicators</strong>: Affect the system (files, registry, process operations)</li>
-<li><strong>Network-based Indicators</strong>: Communicate with external IPs and URLs (Internet, socket operations)</li>
-</ul>
-<h2 id="Basic-Dynamic-Analysis"><a href="#Basic-Dynamic-Analysis" class="headerlink" title="Basic Dynamic Analysis"></a>Basic Dynamic Analysis</h2><ol>
-<li><strong>Running the Malware</strong><ul>
-<li><strong>Sandboxes</strong><ul>
-<li><strong>GFI Sandboxes</strong><ul>
-<li><strong>Mutex</strong>: Prevents multiple threads&#x2F;processes from accessing a resource</li>
-</ul>
-</li>
-<li><strong>Sandboxes Drawbacks</strong></li>
-</ul>
-</li>
-<li><strong>rundll32.exe</strong>: (Run DLL with export arguments)</li>
-</ul>
-</li>
-<li><strong>Process Monitoring</strong><ul>
-<li><strong>procmon</strong>: Historical monitoring</li>
-<li><strong>Process Explorer</strong>: Live monitoring</li>
-</ul>
-</li>
-<li><strong>Registry Monitoring</strong><ul>
-<li><strong>regshot</strong>: Compare registry before and after</li>
-<li><strong>CaptureBat</strong></li>
-</ul>
-</li>
-<li><strong>Network Monitoring</strong><ul>
-<li><strong>ApateDNS</strong>: Fake a network (127.0.0.1)<ul>
-<li>Change Local Host in TCP&#x2F;IP properties to <code>127.0.0.1</code></li>
-<li>Change DNS reply address in ApateDNS to <code>127.0.0.1</code></li>
-</ul>
-</li>
-<li><strong>NetCat</strong>: Command <code>nc -l -p 443</code> (-l is a lowercase L)</li>
-<li><strong>Wireshark</strong></li>
-</ul>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Malware Analysis</category>
-      </categories>
-      <tags>
-        <tag>Malware Analysis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Dynamic Malware Analysis</title>
-    <url>/2025/01/28/Malware-Analysis-Project/</url>
-    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Dynamic malware analysis is a crucial technique for understanding the behavior of malicious software in a controlled environment. By observing how malware executes and interacts with its host system, we can uncover hidden functionalities, identify affected files and processes, and better prepare countermeasures. Watch the introduction to dynamic malware analysis here:</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/u3_Cv-tJcck?si=ZQaN0J26bh1sFv05" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-<h2 id="Dynamic-Malware-Analysis"><a href="#Dynamic-Malware-Analysis" class="headerlink" title="Dynamic Malware Analysis"></a>Dynamic Malware Analysis</h2><p>Dynamic malware analysis involves running the malware in a secure environment to observe its runtime behavior. This method reveals how malware impacts the system, including file changes, process creation, network activities, and registry modifications. By using tools like <strong>Process Monitor</strong>, <strong>Regshot</strong>, and <strong>ApateDNS</strong>, analysts can track these activities and understand the malware’s objectives.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lH7gBbJTtxE?si=Rt0GckajuAiVRQg_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-<h3 id="Key-Steps"><a href="#Key-Steps" class="headerlink" title="Key Steps:"></a>Key Steps:</h3><ol>
-<li><p><strong>Setting Up a Secure Environment</strong>:</p>
-<ul>
-<li>Use virtual machines to isolate malware from the host system.</li>
-<li>Configure network settings to prevent unauthorized connections.</li>
-</ul>
-</li>
-<li><p><strong>Observing Malware Behavior</strong>:</p>
-<ul>
-<li>Track file and registry changes using tools like <strong>Regshot</strong>.</li>
-<li>Monitor processes with <strong>Process Monitor</strong> and <strong>Process Explorer</strong>.</li>
-<li>Intercept DNS requests with <strong>ApateDNS</strong> to identify malicious connections.</li>
-</ul>
-</li>
-<li><p><strong>Analyzing Network Activity</strong>:</p>
-<ul>
-<li>Utilize tools like <strong>NetCat</strong> or sandbox environments to capture data exchanged with Command-and-Control (C2) servers.</li>
-</ul>
-</li>
-<li><p><strong>Detailed Analysis</strong>:</p>
-<ul>
-<li>Use advanced tools like <strong>dnSpy</strong> and <strong>Ghidra</strong> to unpack and deobfuscate malicious code, revealing hidden instructions and payloads.</li>
-</ul>
-</li>
-</ol>
-<p>Dynamic analysis complements static methods, offering insights into malware’s real-world impact and enabling analysts to develop effective countermeasures.</p>
-]]></content>
-      <categories>
-        <category>Cybersecurity</category>
-        <category>Malware</category>
-      </categories>
-      <tags>
-        <tag>Analysis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2024/11/20/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -506,6 +462,50 @@
       </categories>
       <tags>
         <tag>Cheatsheet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Dynamic Malware Analysis</title>
+    <url>/2025/01/28/Malware-Analysis-Project/</url>
+    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Dynamic malware analysis is a crucial technique for understanding the behavior of malicious software in a controlled environment. By observing how malware executes and interacts with its host system, we can uncover hidden functionalities, identify affected files and processes, and better prepare countermeasures. Watch the introduction to dynamic malware analysis here:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/u3_Cv-tJcck?si=ZQaN0J26bh1sFv05" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h2 id="Dynamic-Malware-Analysis"><a href="#Dynamic-Malware-Analysis" class="headerlink" title="Dynamic Malware Analysis"></a>Dynamic Malware Analysis</h2><p>Dynamic malware analysis involves running the malware in a secure environment to observe its runtime behavior. This method reveals how malware impacts the system, including file changes, process creation, network activities, and registry modifications. By using tools like <strong>Process Monitor</strong>, <strong>Regshot</strong>, and <strong>ApateDNS</strong>, analysts can track these activities and understand the malware’s objectives.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lH7gBbJTtxE?si=Rt0GckajuAiVRQg_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h3 id="Key-Steps"><a href="#Key-Steps" class="headerlink" title="Key Steps:"></a>Key Steps:</h3><ol>
+<li><p><strong>Setting Up a Secure Environment</strong>:</p>
+<ul>
+<li>Use virtual machines to isolate malware from the host system.</li>
+<li>Configure network settings to prevent unauthorized connections.</li>
+</ul>
+</li>
+<li><p><strong>Observing Malware Behavior</strong>:</p>
+<ul>
+<li>Track file and registry changes using tools like <strong>Regshot</strong>.</li>
+<li>Monitor processes with <strong>Process Monitor</strong> and <strong>Process Explorer</strong>.</li>
+<li>Intercept DNS requests with <strong>ApateDNS</strong> to identify malicious connections.</li>
+</ul>
+</li>
+<li><p><strong>Analyzing Network Activity</strong>:</p>
+<ul>
+<li>Utilize tools like <strong>NetCat</strong> or sandbox environments to capture data exchanged with Command-and-Control (C2) servers.</li>
+</ul>
+</li>
+<li><p><strong>Detailed Analysis</strong>:</p>
+<ul>
+<li>Use advanced tools like <strong>dnSpy</strong> and <strong>Ghidra</strong> to unpack and deobfuscate malicious code, revealing hidden instructions and payloads.</li>
+</ul>
+</li>
+</ol>
+<p>Dynamic analysis complements static methods, offering insights into malware’s real-world impact and enabling analysts to develop effective countermeasures.</p>
+]]></content>
+      <categories>
+        <category>Cybersecurity</category>
+        <category>Malware</category>
+      </categories>
+      <tags>
+        <tag>Analysis</tag>
       </tags>
   </entry>
   <entry>
