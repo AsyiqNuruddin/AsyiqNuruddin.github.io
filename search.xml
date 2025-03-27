@@ -229,49 +229,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Dynamic Malware Analysis</title>
-    <url>/2025/01/28/Malware-Analysis-Project/</url>
-    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Dynamic malware analysis is a crucial technique for understanding the behavior of malicious software in a controlled environment. By observing how malware executes and interacts with its host system, we can uncover hidden functionalities, identify affected files and processes, and better prepare countermeasures. Watch the introduction to dynamic malware analysis here:</p>
-<iframe src="https://www.youtube.com/embed/u3_Cv-tJcck?si=wn69NaAJAmbn8C4W" width="100%" height="415" frameborder="0" loading="lazy" allowfullscreen></iframe>
-<h2 id="Dynamic-Malware-Analysis"><a href="#Dynamic-Malware-Analysis" class="headerlink" title="Dynamic Malware Analysis"></a>Dynamic Malware Analysis</h2><p>Dynamic malware analysis involves running the malware in a secure environment to observe its runtime behavior. This method reveals how malware impacts the system, including file changes, process creation, network activities, and registry modifications. By using tools like <strong>Process Monitor</strong>, <strong>Regshot</strong>, and <strong>ApateDNS</strong>, analysts can track these activities and understand the malware’s objectives.</p>
-<h3 id="Key-Steps"><a href="#Key-Steps" class="headerlink" title="Key Steps:"></a>Key Steps:</h3><ol>
-<li><p><strong>Setting Up a Secure Environment</strong>:</p>
-<ul>
-<li>Use virtual machines to isolate malware from the host system.</li>
-<li>Configure network settings to prevent unauthorized connections.</li>
-</ul>
-</li>
-<li><p><strong>Observing Malware Behavior</strong>:</p>
-<ul>
-<li>Track file and registry changes using tools like <strong>Regshot</strong>.</li>
-<li>Monitor processes with <strong>Process Monitor</strong> and <strong>Process Explorer</strong>.</li>
-<li>Intercept DNS requests with <strong>ApateDNS</strong> to identify malicious connections.</li>
-</ul>
-</li>
-<li><p><strong>Analyzing Network Activity</strong>:</p>
-<ul>
-<li>Utilize tools like <strong>NetCat</strong> or sandbox environments to capture data exchanged with Command-and-Control (C2) servers.</li>
-</ul>
-</li>
-<li><p><strong>Detailed Analysis</strong>:</p>
-<ul>
-<li>Use advanced tools like <strong>dnSpy</strong> and <strong>Ghidra</strong> to unpack and deobfuscate malicious code, revealing hidden instructions and payloads.</li>
-</ul>
-</li>
-</ol>
-<iframe src="https://www.youtube.com/embed/lH7gBbJTtxE?si=_NV4GeAoJZsNpst_" width="100%" height="415" frameborder="0" loading="lazy" allowfullscreen></iframe>
-
-<p>Dynamic analysis complements static methods, offering insights into malware’s real-world impact and enabling analysts to develop effective countermeasures.</p>
-]]></content>
-      <categories>
-        <category>Cybersecurity</category>
-        <category>Malware</category>
-      </categories>
-      <tags>
-        <tag>Analysis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Basic Static and Dynamic Analysis cheatsheet</title>
     <url>/2024/11/22/basic-static-and-dynamic-analysis/</url>
     <content><![CDATA[<p>This cheatsheet is not indepth and detailed. It will only cover the required minimum<br>Might make a more indepth version when required.</p>
@@ -379,6 +336,49 @@
       </categories>
       <tags>
         <tag>Malware Analysis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Dynamic Malware Analysis</title>
+    <url>/2025/01/28/Malware-Analysis-Project/</url>
+    <content><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Dynamic malware analysis is a crucial technique for understanding the behavior of malicious software in a controlled environment. By observing how malware executes and interacts with its host system, we can uncover hidden functionalities, identify affected files and processes, and better prepare countermeasures. Watch the introduction to dynamic malware analysis here:</p>
+<iframe src="https://www.youtube.com/embed/u3_Cv-tJcck?si=wn69NaAJAmbn8C4W" width="100%" height="415" frameborder="0" loading="lazy" allowfullscreen></iframe>
+<h2 id="Dynamic-Malware-Analysis"><a href="#Dynamic-Malware-Analysis" class="headerlink" title="Dynamic Malware Analysis"></a>Dynamic Malware Analysis</h2><p>Dynamic malware analysis involves running the malware in a secure environment to observe its runtime behavior. This method reveals how malware impacts the system, including file changes, process creation, network activities, and registry modifications. By using tools like <strong>Process Monitor</strong>, <strong>Regshot</strong>, and <strong>ApateDNS</strong>, analysts can track these activities and understand the malware’s objectives.</p>
+<h3 id="Key-Steps"><a href="#Key-Steps" class="headerlink" title="Key Steps:"></a>Key Steps:</h3><ol>
+<li><p><strong>Setting Up a Secure Environment</strong>:</p>
+<ul>
+<li>Use virtual machines to isolate malware from the host system.</li>
+<li>Configure network settings to prevent unauthorized connections.</li>
+</ul>
+</li>
+<li><p><strong>Observing Malware Behavior</strong>:</p>
+<ul>
+<li>Track file and registry changes using tools like <strong>Regshot</strong>.</li>
+<li>Monitor processes with <strong>Process Monitor</strong> and <strong>Process Explorer</strong>.</li>
+<li>Intercept DNS requests with <strong>ApateDNS</strong> to identify malicious connections.</li>
+</ul>
+</li>
+<li><p><strong>Analyzing Network Activity</strong>:</p>
+<ul>
+<li>Utilize tools like <strong>NetCat</strong> or sandbox environments to capture data exchanged with Command-and-Control (C2) servers.</li>
+</ul>
+</li>
+<li><p><strong>Detailed Analysis</strong>:</p>
+<ul>
+<li>Use advanced tools like <strong>dnSpy</strong> and <strong>Ghidra</strong> to unpack and deobfuscate malicious code, revealing hidden instructions and payloads.</li>
+</ul>
+</li>
+</ol>
+<iframe src="https://www.youtube.com/embed/lH7gBbJTtxE?si=_NV4GeAoJZsNpst_" width="100%" height="415" frameborder="0" loading="lazy" allowfullscreen></iframe>
+
+<p>Dynamic analysis complements static methods, offering insights into malware’s real-world impact and enabling analysts to develop effective countermeasures.</p>
+]]></content>
+      <categories>
+        <category>Cybersecurity</category>
+        <category>Malware</category>
+      </categories>
+      <tags>
+        <tag>Analysis</tag>
       </tags>
   </entry>
   <entry>
@@ -557,6 +557,19 @@
       </categories>
       <tags>
         <tag>Cheatsheet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Simplifying Server &amp; Deployment Management with Komodo</title>
+    <url>/2025/03/28/Setting-up-Kodomo-an-Open-Source-Portainer-Alternative/</url>
+    <content><![CDATA[<p>TBC</p>
+]]></content>
+      <categories>
+        <category>Self Host</category>
+        <category>DevOps</category>
+      </categories>
+      <tags>
+        <tag>Infrastructure</tag>
       </tags>
   </entry>
 </search>
