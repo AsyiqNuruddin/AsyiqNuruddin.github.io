@@ -272,113 +272,121 @@
       </tags>
   </entry>
   <entry>
-    <title>Basic Static and Dynamic Analysis cheatsheet</title>
-    <url>/2024/11/22/basic-static-and-dynamic-analysis/</url>
-    <content><![CDATA[<p>This cheatsheet is not indepth and detailed. It will only cover the required minimum<br>Might make a more indepth version when required.</p>
-<h2 id="Basic-Static-Analysis"><a href="#Basic-Static-Analysis" class="headerlink" title="Basic Static Analysis"></a>Basic Static Analysis</h2><ol>
-<li><strong>Malware Fingerprint</strong><ul>
-<li><strong>AV Scanning</strong><ul>
-<li>Hashing</li>
-<li>VirusTotal</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Finding String in Malware</strong><ul>
-<li><strong>Representation of Strings</strong><ul>
-<li>ASCII (1 Byte), Hexadecimal</li>
-<li>Unicode (2 Bytes)</li>
-</ul>
-</li>
-<li><strong>BinText</strong>: String Extraction Tool</li>
-</ul>
-</li>
-<li><strong>Portable Executable Format</strong></li>
-<li><strong>Source to Execution</strong><ul>
-<li><strong>Compiler</strong>: Translates high-level code to machine code</li>
-<li><strong>Linker</strong>: Links <code>.obj</code> files into a single <code>.exe</code> executable</li>
-<li><strong>Loader</strong>: Allocates memory space and prepares the execution file</li>
-</ul>
-</li>
-<li><strong>Linking</strong><ul>
-<li><strong>Static Linking</strong>: Library copied into executable at start</li>
-<li><strong>Dynamic Linking</strong>: Searches and loads library at runtime</li>
-</ul>
-</li>
-<li><strong>Loading a PE</strong><ul>
-<li><strong>Absolute Loading</strong>: Same address</li>
-<li><strong>Relocatable Loading</strong>: Different address based on availability</li>
-<li><strong>Dynamic Run-time Loading</strong>: Different address while running</li>
-</ul>
-</li>
-<li><strong>Address Binding</strong>: Binding of Virtual Address to Physical Address<ul>
-<li>Relative Virtual Addresses</li>
-<li>Base Address</li>
-</ul>
-</li>
-<li><strong>PE File Format</strong><ul>
-<li><strong>PE Sections</strong><ul>
-<li><code>.edata</code> (Export Data)</li>
-<li><code>.reloc</code> (Base Relocation)</li>
-</ul>
-</li>
-<li><strong>Dependency Walker</strong>: See <code>.edata</code> &amp; <code>.idata</code></li>
-<li><strong>PEView</strong>: View files when compiled</li>
-</ul>
-</li>
-<li><strong>Packing Executable</strong><ul>
-<li><strong>PEiD</strong>: Detect packed PE<ul>
-<li><strong>PEiD Unpacker</strong>: Use plugins to unpack</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Indicators of Malware</strong></li>
-</ol>
+    <title>Simplifying Server &amp; Deployment Management with Komodo</title>
+    <url>/2025/03/28/Setting-up-Kodomo-an-Open-Source-Portainer-Alternative/</url>
+    <content><![CDATA[<h1 id="Simplifying-Server-Deployment-Management-with-Komodo"><a href="#Simplifying-Server-Deployment-Management-with-Komodo" class="headerlink" title="Simplifying Server &amp; Deployment Management with Komodo"></a>Simplifying Server &amp; Deployment Management with Komodo</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>Komodo</strong> offers a unified platform for managing servers and automated deployments, making server management simpler and more streamlined. </p>
+<p>Unlike Portainer, <strong>Komodo</strong> is free and open-source, making it ideal for home labs and small businesses. While it lacks some advanced features like identity&#x2F;access management and Kubernetes support, it excels in managing Docker-based environments.</p>
+<hr>
+<h2 id="What’s-Komodo-All-About"><a href="#What’s-Komodo-All-About" class="headerlink" title="What’s Komodo All About?"></a>What’s Komodo All About?</h2><p>At its core, <strong>Komodo</strong> is a web application designed to streamline the management of servers, builds, deployments, and automated tasks. It takes on the heavy lifting of connecting multiple servers, monitoring system performance, and handling Docker containers—all through a user-friendly interface.</p>
+<h3 id="Key-Features-That-Stand-Out"><a href="#Key-Features-That-Stand-Out" class="headerlink" title="Key Features That Stand Out"></a>Key Features That Stand Out</h3><ol>
+<li><p><strong>Server Management &amp; Monitoring</strong>:</p>
 <ul>
-<li><strong>Host-based Indicators</strong>: Affect the system (files, registry, process operations)</li>
-<li><strong>Network-based Indicators</strong>: Communicate with external IPs and URLs (Internet, socket operations)</li>
-</ul>
-<h2 id="Basic-Dynamic-Analysis"><a href="#Basic-Dynamic-Analysis" class="headerlink" title="Basic Dynamic Analysis"></a>Basic Dynamic Analysis</h2><ol>
-<li><strong>Running the Malware</strong><ul>
-<li><strong>Sandboxes</strong><ul>
-<li><strong>GFI Sandboxes</strong><ul>
-<li><strong>Mutex</strong>: Prevents multiple threads&#x2F;processes from accessing a resource</li>
+<li>Connect multiple servers and keep a close eye on CPU, memory, and disk usage.</li>
+<li>Get notified before issues escalate.</li>
 </ul>
 </li>
-<li><strong>Sandboxes Drawbacks</strong></li>
+<li><p><strong>Container Control</strong>:</p>
+<ul>
+<li>Easily manage Docker containers—start, stop, restart, and monitor logs effortlessly.</li>
 </ul>
 </li>
-<li><strong>rundll32.exe</strong>: (Run DLL with export arguments)</li>
+<li><p><strong>Docker Compose Deployment</strong>:</p>
+<ul>
+<li>Deploy Docker Compose stacks directly from the UI, host files, or even pull them from a Git repository.</li>
 </ul>
 </li>
-<li><strong>Process Monitoring</strong><ul>
-<li><strong>procmon</strong>: Historical monitoring</li>
-<li><strong>Process Explorer</strong>: Live monitoring</li>
+<li><p><strong>Automated Builds &amp; Deployments</strong>:</p>
+<ul>
+<li>Automate application source code builds into versioned Docker images.</li>
+<li>Supports single-use AWS instances for extra capacity when needed.</li>
 </ul>
 </li>
-<li><strong>Registry Monitoring</strong><ul>
-<li><strong>regshot</strong>: Compare registry before and after</li>
-<li><strong>CaptureBat</strong></li>
+<li><p><strong>Config &amp; Secrets Management</strong>:</p>
+<ul>
+<li>Securely store and manage environment variables and secrets across multiple environments.</li>
 </ul>
 </li>
-<li><strong>Network Monitoring</strong><ul>
-<li><strong>ApateDNS</strong>: Fake a network (127.0.0.1)<ul>
-<li>Change Local Host in TCP&#x2F;IP properties to <code>127.0.0.1</code></li>
-<li>Change DNS reply address in ApateDNS to <code>127.0.0.1</code></li>
-</ul>
-</li>
-<li><strong>NetCat</strong>: Command <code>nc -l -p 443</code> (-l is a lowercase L)</li>
-<li><strong>Wireshark</strong></li>
+<li><p><strong>Advanced API &amp; Developer-Friendly Tools</strong>:</p>
+<ul>
+<li>Exposes an RPC-like HTTP API for seamless integration with Rust &amp; TypeScript clients.</li>
+<li>Supports custom scripts in TypeScript for executing specific operations.</li>
 </ul>
 </li>
 </ol>
+<hr>
+<h2 id="Setting-Up-Komodo"><a href="#Setting-Up-Komodo" class="headerlink" title="Setting Up Komodo"></a>Setting Up Komodo</h2><p>Komodo uses a <strong>Docker Compose</strong> setup consisting of three key components:</p>
+<ul>
+<li><strong>Core</strong>: The API and UI that handle server and container management.</li>
+<li><strong>Periphery</strong>: Lightweight agents running on connected servers, executing actions and retrieving system metrics.</li>
+<li><strong>Database</strong>: Stores configuration, logs, and metadata.</li>
+</ul>
+<h3 id="Step-by-Step-Setup"><a href="#Step-by-Step-Setup" class="headerlink" title="Step-by-Step Setup:"></a>Step-by-Step Setup:</h3><ol>
+<li>Clone the repository from GitHub.</li>
+<li>Configure the environment variables.</li>
+<li>Deploy using <code>docker-compose up -d</code>.</li>
+</ol>
+<p>Once running, log into the <strong>Komodo UI</strong> and start managing your infrastructure effortlessly.</p>
+<hr>
+<h2 id="Installing-Docker-with-APT-Repository"><a href="#Installing-Docker-with-APT-Repository" class="headerlink" title="Installing Docker with APT Repository"></a>Installing Docker with APT Repository</h2><p>Before installing Komodo, ensure Docker Engine is installed on your system. Follow these steps to set up Docker using the APT repository (Ubuntu). For full instructions, refer to the <a href="https://docs.docker.com/engine/install/ubuntu/">official Docker documentation</a>.</p>
+<h3 id="Step-1-Add-Docker’s-Official-GPG-Key"><a href="#Step-1-Add-Docker’s-Official-GPG-Key" class="headerlink" title="Step 1: Add Docker’s Official GPG Key"></a>Step 1: Add Docker’s Official GPG Key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get update</span><br><span class="line"><span class="built_in">sudo</span> apt-get install ca-certificates curl</span><br><span class="line"><span class="built_in">sudo</span> install -m 0755 -d /etc/apt/keyrings</span><br><span class="line"><span class="built_in">sudo</span> curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> a+r /etc/apt/keyrings/docker.asc</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step-2-Add-the-Docker-Repository"><a href="#Step-2-Add-the-Docker-Repository" class="headerlink" title="Step 2: Add the Docker Repository"></a>Step 2: Add the Docker Repository</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> \</span><br><span class="line">  <span class="string">&quot;deb [arch=<span class="subst">$(dpkg --print-architecture)</span> signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">  <span class="subst">$(. /etc/os-release &amp;&amp; echo <span class="string">&quot;<span class="variable">$&#123;UBUNTU_CODENAME:-<span class="variable">$VERSION_CODENAME</span>&#125;</span>&quot;</span>)</span> stable&quot;</span> | \</span><br><span class="line">  <span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line"><span class="built_in">sudo</span> apt-get update</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step-3-Install-Docker"><a href="#Step-3-Install-Docker" class="headerlink" title="Step 3: Install Docker"></a>Step 3: Install Docker</h3><p>To install the latest version of Docker, run:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step-4-Verify-the-Installation"><a href="#Step-4-Verify-the-Installation" class="headerlink" title="Step 4: Verify the Installation"></a>Step 4: Verify the Installation</h3><p>Run the following command to verify Docker is installed correctly:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker run hello-world</span><br></pre></td></tr></table></figure>
+<p>This command downloads a test image and runs it in a container. When executed, it prints a confirmation message and exits.</p>
+<hr>
+<h2 id="Configuring-Komodo-with-Secure-Passkey"><a href="#Configuring-Komodo-with-Secure-Passkey" class="headerlink" title="Configuring Komodo with Secure Passkey"></a>Configuring Komodo with Secure Passkey</h2><p>I highly reccomend MongoDb than Sqlite when configuring originaly supported for and the other verions are supported due to then your core as it is due to the FerretDB Mongo Adapter (<a href="https://www.ferretdb.com/">https://www.ferretdb.com/</a>).</p>
+<h3 id="Initial-login"><a href="#Initial-login" class="headerlink" title="Initial login"></a>Initial login</h3><p>Core should now be accessible on the specified port, so navigating to <code>http://&lt;address&gt;:&lt;port&gt;</code> will display the login page. Enter your admin username and password, and click “Sign Up”, not “Log In”, to create the initial user.</p>
+<h2 id="Setting-Up-Komodo-Core-via-MongoDB"><a href="#Setting-Up-Komodo-Core-via-MongoDB" class="headerlink" title="Setting Up Komodo Core via MongoDB"></a>Setting Up Komodo Core via MongoDB</h2><p>Same steps extracted from here: <a href="https://komo.do/docs/setup/mongo">https://komo.do/docs/setup/mongo</a></p>
+<h3 id="1-Copy-over-yaml-and-enviroment-files"><a href="#1-Copy-over-yaml-and-enviroment-files" class="headerlink" title="1. Copy over yaml and enviroment files."></a>1. Copy over yaml and enviroment files.</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget -P komodo https://raw.githubusercontent.com/moghtech/komodo/main/compose/mongo.compose.yaml &amp;&amp; \</span><br><span class="line">  wget -P komodo https://raw.githubusercontent.com/moghtech/komodo/main/compose/compose.env</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Edit-Database-Credentials-for-MongoDB"><a href="#2-Edit-Database-Credentials-for-MongoDB" class="headerlink" title="2. Edit Database Credentials (for MongoDB):"></a>2. Edit Database Credentials (for MongoDB):</h3><p>Change your default admin credentials</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">KOMODO_DB_USERNAME=admin</span><br><span class="line">KOMODO_DB_PASSWORD=admin</span><br></pre></td></tr></table></figure>
+<p>Make sure to change this ‘secure’ admin credentials</p>
+<h3 id="Secure-Passkey-for-Core-Periphery-Authentication"><a href="#Secure-Passkey-for-Core-Periphery-Authentication" class="headerlink" title="Secure Passkey for Core&#x2F;Periphery Authentication:"></a>Secure Passkey for Core&#x2F;Periphery Authentication:</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">KOMODO_PASSKEY=some-passkey</span><br></pre></td></tr></table></figure>
+<p><strong>Notice:</strong> If you intend to use this for actual production purposes, regardless of its CI&#x2F;CD capabilities, please review all the configurable environment details of the compose.env file. The ones I’ve listed are the bare minimum and should not be considered the standard.</p>
+<h3 id="3-Deploying-Komodo"><a href="#3-Deploying-Komodo" class="headerlink" title="3. Deploying Komodo"></a>3. Deploying Komodo</h3><p>To launch Komodo with Docker, use the following command:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose -p komodo -f komodo/mongo.compose.yaml --env-file komodo/compose.env up -d</span><br></pre></td></tr></table></figure>
+
+<p><strong>Note:</strong> After the initial boot, make sure to sign up and sign in manually as the system doesn’t automatically register you.</p>
+<hr>
+<h2 id="Adding-Servers-to-Your-Komodo-Dashboard"><a href="#Adding-Servers-to-Your-Komodo-Dashboard" class="headerlink" title="Adding Servers to Your Komodo Dashboard"></a>Adding Servers to Your Komodo Dashboard</h2><p>Under the <strong>Resources</strong> tab, you can manage and add additional servers:</p>
+<ul>
+<li><strong>Stacks</strong>: Manage Docker Compose files.</li>
+<li><strong>Deployment</strong>: Create stacks from scratch.</li>
+<li>Additional features such as <strong>Builds</strong>, <strong>Procedures</strong>, <strong>Builders</strong>, <strong>Alerters</strong>, and <strong>Templates</strong> are available, though some are behind a paywall in  which are explorable via Komodo.</li>
+</ul>
+<hr>
+<h2 id="Deploying-Docker-Containers-in-Komodo"><a href="#Deploying-Docker-Containers-in-Komodo" class="headerlink" title="Deploying Docker Containers in Komodo"></a>Deploying Docker Containers in Komodo</h2><p>To start a Docker container in Komodo, go to <strong>Stacks</strong> and select the <strong>UI Defined</strong> option to see all familiar aspects from Portainer. This will allow you to deploy and monitor containers with ease.</p>
+<p><img src="/images/komodo4.png"></p>
+<p>Make sure to <strong>save your Docker code and variables</strong> before deployment to avoid losing any configurations. It’s also a good idea to enable <strong>Poll For Updates</strong> and <strong>Auto Updates</strong>.</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="/images/komodo2.png"></h2><h2 id="User-Experience"><a href="#User-Experience" class="headerlink" title="User Experience"></a>User Experience</h2><p>The UI in Komodo is intuitive and similar to Portainer. It allows you to see any issues if a Docker command or container fails, making it easy to troubleshoot.</p>
+<div class="gallery-container" data-type="data" data-button="">
+      <div class="gallery-items">[{"url":"/images/komodo1.png","alt":""},{"url":"/images/komodo5.png","alt":""},{"url":"/images/komodo6.png","alt":""}]</div>
+    </div>
+
+<hr>
+<h2 id="Final-Thoughts"><a href="#Final-Thoughts" class="headerlink" title="Final Thoughts"></a>Final Thoughts</h2><p>If you’re in <strong>Self-Host</strong> or <strong>DevOps</strong> and need a robust, <strong>open-source</strong> solution for server and deployment management, <strong>Komodo</strong> is worth exploring. It’s efficient, developer-friendly, and keeps your infrastructure secure and optimized. </p>
+<p>Try it out, experiment with its features, and let me know your thoughts. Happy deploying! </p>
+<p>If you dislike komodo due to its complexity some other alternatives are open-source and manages docker via GUI  worth checking out are DockGE, Dozzle and Yacht.</p>
+<hr>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a href="https://komo.do/docs/setup">Komodo Setup Documentation</a></li>
+<li><a href="https://komo.do/docs/setup/mongo">Komodo MongoDB Setup Documentation</a></li>
+<li><a href="https://www.ferretdb.com/">FerretDB Official Website</a></li>
+</ul>
+<hr>
 ]]></content>
       <categories>
-        <category>Malware Analysis</category>
+        <category>Self Host</category>
+        <category>DevOps</category>
       </categories>
       <tags>
-        <tag>Malware Analysis</tag>
+        <tag>Infrastructure</tag>
       </tags>
   </entry>
   <entry>
@@ -557,6 +565,116 @@
       </categories>
       <tags>
         <tag>Cheatsheet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Basic Static and Dynamic Analysis cheatsheet</title>
+    <url>/2024/11/22/basic-static-and-dynamic-analysis/</url>
+    <content><![CDATA[<p>This cheatsheet is not indepth and detailed. It will only cover the required minimum<br>Might make a more indepth version when required.</p>
+<h2 id="Basic-Static-Analysis"><a href="#Basic-Static-Analysis" class="headerlink" title="Basic Static Analysis"></a>Basic Static Analysis</h2><ol>
+<li><strong>Malware Fingerprint</strong><ul>
+<li><strong>AV Scanning</strong><ul>
+<li>Hashing</li>
+<li>VirusTotal</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Finding String in Malware</strong><ul>
+<li><strong>Representation of Strings</strong><ul>
+<li>ASCII (1 Byte), Hexadecimal</li>
+<li>Unicode (2 Bytes)</li>
+</ul>
+</li>
+<li><strong>BinText</strong>: String Extraction Tool</li>
+</ul>
+</li>
+<li><strong>Portable Executable Format</strong></li>
+<li><strong>Source to Execution</strong><ul>
+<li><strong>Compiler</strong>: Translates high-level code to machine code</li>
+<li><strong>Linker</strong>: Links <code>.obj</code> files into a single <code>.exe</code> executable</li>
+<li><strong>Loader</strong>: Allocates memory space and prepares the execution file</li>
+</ul>
+</li>
+<li><strong>Linking</strong><ul>
+<li><strong>Static Linking</strong>: Library copied into executable at start</li>
+<li><strong>Dynamic Linking</strong>: Searches and loads library at runtime</li>
+</ul>
+</li>
+<li><strong>Loading a PE</strong><ul>
+<li><strong>Absolute Loading</strong>: Same address</li>
+<li><strong>Relocatable Loading</strong>: Different address based on availability</li>
+<li><strong>Dynamic Run-time Loading</strong>: Different address while running</li>
+</ul>
+</li>
+<li><strong>Address Binding</strong>: Binding of Virtual Address to Physical Address<ul>
+<li>Relative Virtual Addresses</li>
+<li>Base Address</li>
+</ul>
+</li>
+<li><strong>PE File Format</strong><ul>
+<li><strong>PE Sections</strong><ul>
+<li><code>.edata</code> (Export Data)</li>
+<li><code>.reloc</code> (Base Relocation)</li>
+</ul>
+</li>
+<li><strong>Dependency Walker</strong>: See <code>.edata</code> &amp; <code>.idata</code></li>
+<li><strong>PEView</strong>: View files when compiled</li>
+</ul>
+</li>
+<li><strong>Packing Executable</strong><ul>
+<li><strong>PEiD</strong>: Detect packed PE<ul>
+<li><strong>PEiD Unpacker</strong>: Use plugins to unpack</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Indicators of Malware</strong></li>
+</ol>
+<ul>
+<li><strong>Host-based Indicators</strong>: Affect the system (files, registry, process operations)</li>
+<li><strong>Network-based Indicators</strong>: Communicate with external IPs and URLs (Internet, socket operations)</li>
+</ul>
+<h2 id="Basic-Dynamic-Analysis"><a href="#Basic-Dynamic-Analysis" class="headerlink" title="Basic Dynamic Analysis"></a>Basic Dynamic Analysis</h2><ol>
+<li><strong>Running the Malware</strong><ul>
+<li><strong>Sandboxes</strong><ul>
+<li><strong>GFI Sandboxes</strong><ul>
+<li><strong>Mutex</strong>: Prevents multiple threads&#x2F;processes from accessing a resource</li>
+</ul>
+</li>
+<li><strong>Sandboxes Drawbacks</strong></li>
+</ul>
+</li>
+<li><strong>rundll32.exe</strong>: (Run DLL with export arguments)</li>
+</ul>
+</li>
+<li><strong>Process Monitoring</strong><ul>
+<li><strong>procmon</strong>: Historical monitoring</li>
+<li><strong>Process Explorer</strong>: Live monitoring</li>
+</ul>
+</li>
+<li><strong>Registry Monitoring</strong><ul>
+<li><strong>regshot</strong>: Compare registry before and after</li>
+<li><strong>CaptureBat</strong></li>
+</ul>
+</li>
+<li><strong>Network Monitoring</strong><ul>
+<li><strong>ApateDNS</strong>: Fake a network (127.0.0.1)<ul>
+<li>Change Local Host in TCP&#x2F;IP properties to <code>127.0.0.1</code></li>
+<li>Change DNS reply address in ApateDNS to <code>127.0.0.1</code></li>
+</ul>
+</li>
+<li><strong>NetCat</strong>: Command <code>nc -l -p 443</code> (-l is a lowercase L)</li>
+<li><strong>Wireshark</strong></li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Malware Analysis</category>
+      </categories>
+      <tags>
+        <tag>Malware Analysis</tag>
       </tags>
   </entry>
 </search>
